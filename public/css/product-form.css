@@ -1,0 +1,12 @@
+@import url('index.css');
+
+.content form .input-label {
+	font-weight: bold;
+	color: var(--brown-color);
+	text-transform: capitalize;
+}
+
+.content form button {
+	text-transform: capitalize;
+	margin-right: 10px;
+}

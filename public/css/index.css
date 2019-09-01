@@ -1,0 +1,86 @@
+:root {
+	--gray-color: #CDCDCD;
+	--brown-color: #840000;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background: url('../images/bg.gif');
+}
+
+
+/*Style header*/
+
+.menu {
+	border-top: 3px solid var(--brown-color);
+	border-bottom: 1px solid var(--gray-color);
+}
+
+.menu .navbar {
+	padding: 0;
+}
+
+.menu .nav-item {
+	padding: 0 10px;
+	border-right: 1px solid var(--gray-color);
+}
+
+.menu .nav-item .nav-link, .dropdown .nav-link, .dropdown-item {
+	color: black;
+	font-weight: bold;
+	text-transform: capitalize;
+}
+
+.menu-active {
+	background: var(--brown-color);
+}
+
+.text-menu-active {
+	color: white;
+}
+
+.menu .nav-item:hover .nav-link {
+	color: white;
+}
+
+.menu .nav-item:hover {
+	background: var(--brown-color);
+}
+
+.banner {
+	padding: 20px;
+	border-bottom: 1px solid var(--gray-color);
+}
+
+/*End style header*/
+
+/*Start style content*/
+.content .title {
+	padding: 8px;
+    text-transform: capitalize;
+}
+
+.content {
+	padding-top: 1rem
+}
+
+/*End style content*/
+
+/*Style footer*/
+.footer {
+	padding: 10px 0px;
+    text-transform: capitalize;
+}
+
+.footer p {
+	margin-bottom: 0;
+}
+/*End style footer*/

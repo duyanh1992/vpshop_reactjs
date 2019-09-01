@@ -1,0 +1,16 @@
+@import url('index.css');
+
+/*Start style content*/
+
+.content .product-list table th, td {
+	text-transform: capitalize;
+}
+
+.content .product-list table td img {
+	width: 90px;
+  height: 150px;
+}
+
+.content .product-list table td .delete-icon {
+	cursor: pointer;
+}
