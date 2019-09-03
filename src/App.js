@@ -8,8 +8,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path='/admin' component={Admin}/>
-        <Route component={NotFound} />
+        <Route component={Admin}/>
       </Switch>
     </Router>
   );
