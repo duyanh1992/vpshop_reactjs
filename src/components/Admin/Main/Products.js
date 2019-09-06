@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Pagination from '../Pagination';
+import ModalSample from '../../ModalSample';
 import 
 { fetchProductsRequest,
   fetchProductCategoriesRequest,
@@ -13,16 +14,64 @@ import
 
 const rowPerPage = 2;
 
-
 class Products extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      openModal: false,
+      modalAction: false,
+      productId: null
+    };
+
+    this.getModalAction = this.getModalAction.bind(this);
+    this.openModal = this.openModal.bind(this);
+  }
+  
   componentDidMount() {
     this.props.fetchProducts();
     this.props.fetchCategories();
   }
 
+  renderModal() {
+    if (this.state.openModal) {
+      return (
+        <ModalSample 
+          modal={this.state.openModal}
+          getModalAction={this.getModalAction}
+        />
+      );
+    }
+    return '';
+  }
+
+  openModal() {
+    this.setState({
+      openModal: true
+    });
+  }
+
+  getModalAction(action) {
+    this.setState({
+      modalAction: action,
+      openModal: false
+    }, () => this.delAction(action))
+  }
+
   delProduct(productId) {
-    if (parseInt(productId) > 0) {
-      this.props.delProduct(productId);
+    this.setState({
+      productId
+    });
+
+    this.openModal();
+  }
+
+  delAction(action) {
+    if (action) {
+      const { productId } = this.state;
+      if (parseInt(productId) > 0) {
+        this.props.delProduct(productId);
+      }
     }
   }
   
@@ -34,7 +83,6 @@ class Products extends Component {
     const { page } = this.props.products;
     const { categories, products } = this.props;
     const { productList } = products;
-    // const rowPerPage = 2;
 
     const pos = page * rowPerPage - rowPerPage;
     const productsPerPage = productList.slice(pos, pos+2);
@@ -87,6 +135,7 @@ class Products extends Component {
                 {this.renderProduct()}
               </tbody>
             </table>
+            {this.renderModal()}
           </div>
 
           <Pagination />

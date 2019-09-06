@@ -11,20 +11,20 @@ import {
   fetchProductByIdRequest,
   editProductByIdRequest
 } from '../../../actions/product';
-
-// import ConfirmBox from '../ConfirmBox';
+import ModalSample from '../../ModalSample';
 
 class ProductForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      openModal: false,
+      modalAction: false,
       redirect: false,
       error: false,
       isEditPage: false,
       selectedProduct: [],
       selectedProductId: null,
-      // openConfirm: false,
 
       state: {
         value: 0,
@@ -75,8 +75,10 @@ class ProductForm extends Component {
     this.setRedirect = this.setRedirect.bind(this);
     this.onBlurInput = this.onBlurInput.bind(this);
     this.editStateValue = this.editStateValue.bind(this);
-    this.setSelectedProduct = this.setSelectedProduct.bind(this)
-    this.setError = this.setError.bind(this)
+    this.setSelectedProduct = this.setSelectedProduct.bind(this);
+    this.setError = this.setError.bind(this);
+    this.getModalAction = this.getModalAction.bind(this);
+    this.openModal = this.openModal.bind(this);
   }
 
   componentDidMount() {
@@ -93,14 +95,6 @@ class ProductForm extends Component {
       }
     }
   }
-
-  // toggleConfirm() {
-  //   const { openConfirm } = this.state;
-
-  //   this.setState({
-  //     openConfirm: !openConfirm
-  //   });
-  // }
 
   componentWillReceiveProps(nextProps) {
     const { selectedProduct } = nextProps.products;
@@ -248,44 +242,71 @@ class ProductForm extends Component {
     this.setState(()=> this.defaultState);
   }
 
+  renderModal() {
+    if (this.state.openModal) {
+      return (
+        <ModalSample 
+          modal={this.state.openModal}
+          getModalAction={this.getModalAction}
+        />
+      );
+    }
+    return '';
+  }
+
+  openModal() {
+    this.setState({
+      openModal: true
+    });
+  }
+
+  getModalAction(action) {
+    this.setState({
+      modalAction: action,
+      openModal: false
+    }, () => this.addProductAction(action))
+  }
+
   addNewProduct(e) {
     e.preventDefault();
+    this.openModal();
+  }
 
-    const { 
-      name,
-      image,
-      price,
-      category,
-      description,
-    } = this.state;
-
-    console.log(this.state);
-    console.log();
-
-    if (name.value && price.value && category.value && description.value) {
-      if (image.value) {
-        this.uploadImage()
-        .then(this.submitForm)
-        .then(this.setRedirect);
-      }
-    
-      else {
-        if (image.url){
-          this.submitForm();
-          this.setRedirect();
+  addProductAction(action) {
+    if (action) {
+      const { 
+        name,
+        image,
+        price,
+        category,
+        description,
+      } = this.state;
+  
+      if (name.value && price.value && category.value && description.value) {
+        if (image.value) {
+          this.uploadImage()
+          .then(this.submitForm)
+          .then(this.setRedirect);
         }
+      
         else {
-          this.setState({
-            error: true
-          });
+          if (image.url){
+            this.submitForm();
+            this.setRedirect();
+          }
+          else {
+            this.setState({
+              error: true
+            });
+          }
         }
       }
-    }
-    
-    else {
-      this.setState({
-        error: true
-      });
+      
+      else {
+        this.setState({
+          error: true
+        });
+      }
     }
   }
 
@@ -389,18 +410,6 @@ class ProductForm extends Component {
       </div>
     );
   }
-
-  // renderConfirmBox() {
-  //   console.log(123);
-  //   const { openConfirm } = this.state;
-
-  //   console.log(openConfirm);
-
-  //   if (openConfirm === true) {
-  //     return <ConfirmBox />
-  //   }
-  //   return '';
-  // }
   
   render() {
     if (this.state.redirect) {
@@ -475,7 +484,7 @@ class ProductForm extends Component {
             type="submit"
             className="btn btn-success"
             onClick={(e) => this.addNewProduct(e)} 
-          >add
+          >{(this.state.isEditPage) ? 'edit' : 'add'}
           </button>
           <button
             type="reset"
@@ -486,6 +495,7 @@ class ProductForm extends Component {
             reset
           </button>
         </form>
+        {this.renderModal()}
       </div>
     );
   }

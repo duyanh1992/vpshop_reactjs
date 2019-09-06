@@ -9,6 +9,7 @@ const MenuItem = ({path, exact, label}) => {
       children={({match}) => {
         const active = match ? 'menu-active' : '';
         const textActive = match ? 'text-white' : '';
+
         return (
           <li className={`nav-item ${active}`}>
             <Link to={path} className={`${textActive} nav-link`}>{label}</Link>
