@@ -4,7 +4,8 @@ const initialState = {
   isConfirmed: false,
   page: 1,
   productList: [],
-  selectedProduct: []
+  selectedProduct: [],
+  updated: false
 };
 
 const product = (state = initialState, action) => {
@@ -12,6 +13,8 @@ const product = (state = initialState, action) => {
     case actionTypes.ADD_NEW_PRODUCT: {
       const result = {...state};
       result.productList.push(action.data);
+
+      result.updated = (action.data.id) ? true : false;
       
       return result;
     }
@@ -38,6 +41,8 @@ const product = (state = initialState, action) => {
       const result = {...state};
       const editedIndex =  result.productList.findIndex(item => item.id === action.data.id);
       result.productList[editedIndex] = action.data;
+      result.updated = (action.data.id) ? true : false;
+
       return result;
     }
 
@@ -45,6 +50,8 @@ const product = (state = initialState, action) => {
       const result = {...state};
       const { productList } = result;
       result.productList = productList.filter(product => product.id !== action.data.id);
+
+      result.updated = (action.data.id) ? true : false;
       return result;
     }
 

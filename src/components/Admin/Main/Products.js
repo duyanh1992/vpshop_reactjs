@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Pagination from '../Pagination';
 import ModalSample from '../../ModalSample';
+import AlertMessage from '../../AlertMessage';
 import 
 { fetchProductsRequest,
   fetchProductCategoriesRequest,
@@ -111,13 +112,18 @@ class Products extends Component {
     }
   }
 
+  renderAlertMessage(showMessage) {
+    return showMessage ? <AlertMessage content="Updating product list successfully !!!" /> : '';
+  }
+
   render() {
     const { categories, products } = this.props;
-    const { productList } = products;
+    const { productList, updated } = products;
 
     if (productList.length > 0 && categories.length > 0) {
       return (
         <div className="product-list">
+          {this.renderAlertMessage(updated)}
           <Link className="float-right mt-3 mb-3 btn btn-danger" to="/admin/add">Add new Product</Link>
           <div className="table-responsive">
             <table className="table table-bordered text-center">
