@@ -11,10 +11,8 @@ const initialState = {
 const product = (state = initialState, action) => {
   switch(action.type) {
     case actionTypes.ADD_NEW_PRODUCT: {
-      const result = {...state};
+      const result = {...state, updated: false};
       result.productList.push(action.data);
-
-      result.updated = (action.data.id) ? true : false;
       
       return result;
     }
@@ -38,21 +36,23 @@ const product = (state = initialState, action) => {
     }
 
     case actionTypes.EDIT_PRODUCT:{
-      const result = {...state};
+      const result = {...state, updated: false};
       const editedIndex =  result.productList.findIndex(item => item.id === action.data.id);
       result.productList[editedIndex] = action.data;
-      result.updated = (action.data.id) ? true : false;
 
       return result;
     }
 
     case actionTypes.DELETE_PRODUCT: {
-      const result = {...state};
+      const result = {...state, updated: false};
       const { productList } = result;
       result.productList = productList.filter(product => product.id !== action.data.id);
 
-      result.updated = (action.data.id) ? true : false;
       return result;
+    }
+
+    case actionTypes.OPEN_ALERT: {
+      return {...state, updated: true};
     }
 
     default: 

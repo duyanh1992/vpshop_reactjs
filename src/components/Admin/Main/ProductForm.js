@@ -9,7 +9,8 @@ import {
   addProductRequest,
   fetchProductCategoriesRequest,
   fetchProductByIdRequest,
-  editProductByIdRequest
+  editProductByIdRequest,
+  openAlert,
 } from '../../../actions/product';
 import ModalSample from '../../ModalSample';
 
@@ -286,12 +287,14 @@ class ProductForm extends Component {
         if (image.value) {
           this.uploadImage()
           .then(this.submitForm)
-          .then(this.setRedirect);
+          .then(this.props.turnAlertOn)
+          .then(this.setRedirect)
         }
       
         else {
           if (image.url){
             this.submitForm();
+            this.props.turnAlertOn();
             this.setRedirect();
           }
           else {
@@ -524,7 +527,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     updateProduct: (data, id) => {
       dispatch(editProductByIdRequest(data, id));
-    }
+    },
+
+    turnAlertOn: () => {
+      dispatch(openAlert());
+    },
   }
 }
 

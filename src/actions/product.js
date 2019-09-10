@@ -105,3 +105,9 @@ export const deleteProduct = data => {
     data
   }
 }
+
+export const openAlert = () => {
+  return {
+    type: actionTypes.OPEN_ALERT,
+  }
+}
