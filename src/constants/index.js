@@ -7,3 +7,4 @@ export const SHOW_CONFIRM_BOX = 'SHOW_CONFIRM_BOX';
 export const FETCH_PRODUCT_BY_ID = 'FETCH_PRODUCT_BY_ID';
 export const EDIT_PRODUCT = "EDIT_PRODUCT";
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const OPEN_ALERT = 'OPEN_ALERT';

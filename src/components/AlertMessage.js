@@ -10,7 +10,7 @@ class AlertMessage extends Component {
           <p>
             {this.props.content}
           </p>
-        </UncontrolledAlert >
+        </UncontrolledAlert>
       </div>
     );
   }

@@ -9,7 +9,8 @@ import
 { fetchProductsRequest,
   fetchProductCategoriesRequest,
   deleteProductRequest,
-  selectPageRequest
+  selectPageRequest,
+  openAlert
 } from '../../../actions/product';
 //import { formatNumber } from '../../constants/functions';
 
@@ -22,18 +23,30 @@ class Products extends Component {
     this.state = {
       openModal: false,
       modalAction: false,
+      alertOpen: false,
       productId: null
     };
 
     this.getModalAction = this.getModalAction.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.openAlert = this.openAlert.bind(this);
   }
   
   componentDidMount() {
     this.props.fetchProducts();
     this.props.fetchCategories();
+
+    if (this.props.products.updated) {
+      this.openAlert();
+    }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.products.updated) {
+      this.openAlert();
+    }
+  }
+  
   renderModal() {
     if (this.state.openModal) {
       return (
@@ -46,10 +59,18 @@ class Products extends Component {
     return '';
   }
 
-  openModal() {
+  setItem(stateName, value) {
     this.setState({
-      openModal: true
+      [stateName]: value
     });
+  }
+
+  openModal() {
+    this.setItem('openModal', true);
+  }
+
+  openAlert() {
+    this.setItem('alertOpen', true);
   }
 
   getModalAction(action) {
@@ -72,6 +93,7 @@ class Products extends Component {
       const { productId } = this.state;
       if (parseInt(productId) > 0) {
         this.props.delProduct(productId);
+        this.props.turnAlertOn();
       }
     }
   }
@@ -112,18 +134,18 @@ class Products extends Component {
     }
   }
 
-  renderAlertMessage(showMessage) {
-    return showMessage ? <AlertMessage content="Updating product list successfully !!!" /> : '';
+  renderAlertMessage() {
+    return (this.state.alertOpen) ? <AlertMessage content="Updating product list successfully !!!" /> : '';
   }
 
   render() {
     const { categories, products } = this.props;
-    const { productList, updated } = products;
+    const { productList } = products;
 
     if (productList.length > 0 && categories.length > 0) {
       return (
         <div className="product-list">
-          {this.renderAlertMessage(updated)}
+          {this.renderAlertMessage()}
           <Link className="float-right mt-3 mb-3 btn btn-danger" to="/admin/add">Add new Product</Link>
           <div className="table-responsive">
             <table className="table table-bordered text-center">
@@ -176,7 +198,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     sendPage: (page) => {
       dispatch(selectPageRequest(page))
-    }
+    },
+
+    turnAlertOn: () => {
+      dispatch(openAlert());
+    },
   }
 }
 
