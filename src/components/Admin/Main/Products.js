@@ -5,8 +5,10 @@ import PropTypes from 'prop-types';
 import Pagination from '../Pagination';
 import ModalSample from '../../ModalSample';
 import AlertMessage from '../../AlertMessage';
+import Loading from '../../Loading';
 import 
-{ fetchProductsRequest,
+{ 
+  fetchProductsRequest,
   fetchProductCategoriesRequest,
   deleteProductRequest,
   selectPageRequest,
@@ -24,7 +26,8 @@ class Products extends Component {
       openModal: false,
       modalAction: false,
       alertOpen: false,
-      productId: null
+      productId: null,
+      isLoading: true
     };
 
     this.getModalAction = this.getModalAction.bind(this);
@@ -42,6 +45,8 @@ class Products extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setItem('isLoading', false);
+
     if (nextProps.products.updated) {
       this.openAlert();
     }
@@ -141,37 +146,44 @@ class Products extends Component {
   render() {
     const { categories, products } = this.props;
     const { productList } = products;
+    const { isLoading } = this.state;
 
-    if (productList.length > 0 && categories.length > 0) {
-      return (
-        <div className="product-list">
-          {this.renderAlertMessage()}
-          <Link className="float-right mt-3 mb-3 btn btn-danger" to="/admin/add">Add new Product</Link>
-          <div className="table-responsive">
-            <table className="table table-bordered text-center">
-              <thead className="thead-light">
-                <tr>
-                  {/* <th scope="col">#</th> */}
-                  <th scope="col">product name</th>
-                  <th scope="col">price</th>
-                  <th scope="col">category</th>
-                  <th scope="col">image</th>
-                  <th scope="col">action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.renderProduct()}
-              </tbody>
-            </table>
-            {this.renderModal()}
-          </div>
-
-          <Pagination />
-        </div>
-      );
+    if (isLoading) {
+      return <Loading />;
     }
 
-    return '';
+    else {
+      if (productList.length > 0 && categories.length > 0) {
+        return (
+          <div className="product-list">
+            {this.renderAlertMessage()}
+            <Link className="float-right mt-3 mb-3 btn btn-danger" to="/admin/add">Add new Product</Link>
+            <div className="table-responsive">
+              <table className="table table-bordered text-center">
+                <thead className="thead-light">
+                  <tr>
+                    {/* <th scope="col">#</th> */}
+                    <th scope="col">product name</th>
+                    <th scope="col">price</th>
+                    <th scope="col">category</th>
+                    <th scope="col">image</th>
+                    <th scope="col">action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.renderProduct()}
+                </tbody>
+              </table>
+              {this.renderModal()}
+            </div>
+
+            <Pagination />
+          </div>
+        );
+      }
+
+      return '';
+    }
   }
 }
 

@@ -13,6 +13,7 @@ import {
   openAlert,
 } from '../../../actions/product';
 import ModalSample from '../../ModalSample';
+import Loading from '../../Loading';
 
 class ProductForm extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class ProductForm extends Component {
       isEditPage: false,
       selectedProduct: [],
       selectedProductId: null,
+      isLoading: false,
 
       state: {
         value: 0,
@@ -83,6 +85,7 @@ class ProductForm extends Component {
   }
 
   componentDidMount() {
+    this.setItem('isLoading', true);
     this.props.fetchCategories();
 
     const { match } = this.props;
@@ -98,13 +101,14 @@ class ProductForm extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setItem('isLoading', false);
     const { selectedProduct } = nextProps.products;
 
     if (selectedProduct.length === 1 && this.state.isEditPage) {
       this.setSelectedProduct(selectedProduct); 
     }
   }
-
+  
   setSelectedProduct(selectedProduct) {
     if (selectedProduct[0]) {
       this.setState(prevState => ({
@@ -154,6 +158,12 @@ class ProductForm extends Component {
     }
   }
 
+  setItem(stateName, value) {
+    this.setState({
+      [stateName]: value
+    });
+  }
+
   editStateValue(name, value, valueName = 'value') {
     this.setState(prevState => ({
       [name]: {
@@ -164,9 +174,7 @@ class ProductForm extends Component {
   }
 
   setError() {
-    this.setState({
-      error: true
-    });
+    this.setItem('error', true);
   }
 
   onChangeInput(e) {
@@ -186,7 +194,7 @@ class ProductForm extends Component {
   }
 
   setRedirect() {
-    this.setState({redirect: true});
+    this.setItem('redirect', true);
   }
 
   uploadImage() {
@@ -256,9 +264,7 @@ class ProductForm extends Component {
   }
 
   openModal() {
-    this.setState({
-      openModal: true
-    });
+    this.setItem('openModal', true);
   }
 
   getModalAction(action) {
@@ -298,17 +304,13 @@ class ProductForm extends Component {
             this.setRedirect();
           }
           else {
-            this.setState({
-              error: true
-            });
+            this.setItem('error', true);
           }
         }
       }
       
       else {
-        this.setState({
-          error: true
-        });
+        this.setItem('error', true);
       }
     }
   }
@@ -417,6 +419,10 @@ class ProductForm extends Component {
   render() {
     if (this.state.redirect) {
       return <Redirect to="/admin/products" />
+    }
+
+    if (this.state.isLoading) {
+      return <Loading />;
     }
 
     return (
