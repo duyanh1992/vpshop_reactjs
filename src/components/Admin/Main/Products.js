@@ -87,7 +87,8 @@ class Products extends Component {
 
   delProduct(productId) {
     this.setState({
-      productId
+      productId,
+      alertOpen: false
     });
 
     this.openModal();
