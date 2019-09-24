@@ -2,6 +2,10 @@
 
 /*Start style content*/
 
+.content .product-list {
+	min-height: 100px;
+}
+
 .content .product-list table th, td {
 	text-transform: capitalize;
 }

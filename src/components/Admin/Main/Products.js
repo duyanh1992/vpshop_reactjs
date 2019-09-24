@@ -108,6 +108,37 @@ class Products extends Component {
     this.props.sendPage(this.props.products.page - 1);
   }
 
+  renderPrdList() {
+    const { categories, products } = this.props;
+    const { productList } = products;
+
+    if (productList.length > 0 && categories.length > 0) {
+      return (
+        <div>
+          <table className="table table-bordered text-center">
+            <thead className="thead-light">
+              <tr>
+                {/* <th scope="col">#</th> */}
+                <th scope="col">product name</th>
+                <th scope="col">price</th>
+                <th scope="col">category</th>
+                <th scope="col">image</th>
+                <th scope="col">action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderProduct()}
+            </tbody>
+          </table>
+          {this.renderModal()}
+        </div>
+      );
+    }
+    return (
+      <h4 className="text-center">No product to show</h4>
+    );
+  }
+
   renderProduct() {
     const { page } = this.props.products;
     const { categories, products } = this.props;
@@ -145,8 +176,6 @@ class Products extends Component {
   }
 
   render() {
-    const { categories, products } = this.props;
-    const { productList } = products;
     const { isLoading } = this.state;
 
     if (isLoading) {
@@ -154,36 +183,19 @@ class Products extends Component {
     }
 
     else {
-      if (productList.length > 0 && categories.length > 0) {
         return (
           <div className="product-list">
             {this.renderAlertMessage()}
-            <Link className="float-right mt-3 mb-3 btn btn-danger" to="/admin/add">Add new Product</Link>
-            <div className="table-responsive">
-              <table className="table table-bordered text-center">
-                <thead className="thead-light">
-                  <tr>
-                    {/* <th scope="col">#</th> */}
-                    <th scope="col">product name</th>
-                    <th scope="col">price</th>
-                    <th scope="col">category</th>
-                    <th scope="col">image</th>
-                    <th scope="col">action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.renderProduct()}
-                </tbody>
-              </table>
-              {this.renderModal()}
-            </div>
 
+            <Link className="float-right mt-3 mb-3 btn btn-danger" to="/admin/add">Add new Product</Link>
+          
+            <div className="table-responsive">
+              {this.renderPrdList()}
+            </div>
+            
             <Pagination />
           </div>
         );
-      }
-
-      return '';
     }
   }
 }
