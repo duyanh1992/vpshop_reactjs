@@ -542,7 +542,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 ProductForm.propTypes = {
-  categories: PropTypes.array.isRequired
+  categories: PropTypes.array.isRequired,
+  products: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductForm)
