@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
+import { menus } from '../../constants/menus';
 
 const MenuItem = ({path, exact, label}) => {
   return (
@@ -21,28 +22,8 @@ const MenuItem = ({path, exact, label}) => {
   );
 };
 
-const menus = [
-  {
-    path: '/admin/products',
-    exact: true,
-    label: 'home'
-  },
-
-  {
-    path: '/asdasd',
-    exact: false,
-    label: 'manage user'
-  },
-
-  {
-    path: '/qeqwewqe',
-    exact: false,
-    label: 'website'
-  },
-];
-
 class Menu extends Component {
-  renderMenu(menus) {
+  renderMenu() {
     let result = null;
 
     if (menus.length > 0) {
@@ -65,7 +46,7 @@ class Menu extends Component {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
-              {this.renderMenu(menus)}
+              {this.renderMenu()}
             </ul>
             
             <div className="dropdown">

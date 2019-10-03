@@ -55,12 +55,6 @@ export const selectPageRequest = page => {
   }
 }
 
-export const showConfirmBox = () => {
-  return {
-    type: actionTypes.SHOW_CONFIRM_BOX, 
-  }
-}
-
 export const fetchProductByIdRequest = productId => {
  return (dispatch) => {
    return callApi(API_URL, `products/${productId}`).then(res => {
