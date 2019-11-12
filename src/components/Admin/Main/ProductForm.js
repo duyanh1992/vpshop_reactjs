@@ -352,7 +352,7 @@ class ProductForm extends Component {
       <div className="col">
         <label className="input-label" htmlFor={`product_${name}`}>{label}</label>
         <input
-          type="text"
+          type={(name === 'price') ? 'number' : 'text'}
           className="form-control"
           name={name}
           id={`product_${name}`}
