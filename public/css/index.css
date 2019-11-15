@@ -48,7 +48,7 @@ body {
 }
 
 .menu .nav-item:hover .nav-link {
-	color: white;
+	color: white !important;
 }
 
 .menu .nav-item:hover {

@@ -14,6 +14,7 @@ import {
 } from '../../../actions/product';
 import ModalSample from '../../ModalSample';
 import Loading from '../../Loading';
+import { formatCurency } from './../../../constants/functions';
 
 class ProductForm extends Component {
   constructor(props) {
@@ -229,7 +230,7 @@ class ProductForm extends Component {
     if (image.url) {
       const data = {
         name: name.value,
-        price: price.value,
+        price: formatCurency(price.value),
         category_id: category.value,
         state: state.value,
         stock: stock.value,
@@ -352,7 +353,7 @@ class ProductForm extends Component {
       <div className="col">
         <label className="input-label" htmlFor={`product_${name}`}>{label}</label>
         <input
-          type={(name === 'price') ? 'number' : 'text'}
+          type='text'
           className="form-control"
           name={name}
           id={`product_${name}`}
