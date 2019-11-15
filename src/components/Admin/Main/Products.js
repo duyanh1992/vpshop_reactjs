@@ -14,7 +14,6 @@ import
   selectPageRequest,
   openAlert
 } from '../../../actions/product';
-//import { formatNumber } from '../../constants/functions';
 
 const rowPerPage = 2;
 
