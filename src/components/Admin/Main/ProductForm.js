@@ -350,7 +350,7 @@ class ProductForm extends Component {
 
   renderInputText(label, name) {
     return (
-      <div className="col">
+      <div className="form-element col-md-6">
         <label className="input-label" htmlFor={`product_${name}`}>{label}</label>
         <input
           type='text'
@@ -370,7 +370,7 @@ class ProductForm extends Component {
   renderCategories(label, name, data) {
     if (data.length > 0) {
       return (
-        <div className="col">
+        <div className="col-md-6 form-element">
           <label className="input-label" htmlFor="product_category">{label}</label><br />
           <select 
             className="form-control"
@@ -429,12 +429,12 @@ class ProductForm extends Component {
     return (
       <div className="input-form mt-3">
         <form>
-          <div className="form-row form-group">
+          <div className="row form-group">
             {/* Product name */}
             {this.renderInputText('product name', 'name')}
 
             {/* Product image */}
-            <div className="col">
+            <div className="form-element col-md-6">
               <label className="input-label" htmlFor="product_image_input">product image</label>
               <input
                 type="file"
@@ -446,15 +446,15 @@ class ProductForm extends Component {
               {this.renderErrorText("image")}
             </div>
           </div>
-          <div className="form-row form-group">
+          <div className="row form-group">
             {/* Product price */}
             {this.renderInputText('product price', 'price')}
 
             {/* Product category */}
             {this.renderCategories('product category', 'category', this.props.categories)}
           </div>
-          <div className="form-row">
-            <div className="col">
+          <div className="row">
+            <div className="form-element col-md-4">
               <label className="input-label">product state</label><br />
 
               {/* Product state */}
@@ -463,21 +463,21 @@ class ProductForm extends Component {
 
             </div>
 
-            <div className="col">
+            <div className="form-element col-md-4">
               <label className="input-label">in stock</label><br />
               {/* Product in stock */}
               {this.renderRadioOption('Yes', 'stock', 'inStock', 1)}
               {this.renderRadioOption('No', 'stock', 'notInStock', 0)}
             </div>
 
-            <div className="col">
+            <div className="form-element col-md-4">
               <label className="input-label">special product</label><br />
               {/* Product  */}
               {this.renderRadioOption('Yes', 'special', 'isSpecial', 1)}
               {this.renderRadioOption('No', 'special', 'isNotSpecial', 0)}
             </div>
           </div>
-          <div className="form-group mt-3">
+          <div className="form-element form-group mt-3">
             <label className="input-label" htmlFor="product_description">product description</label>
             <textarea
               className="form-control"
@@ -490,20 +490,22 @@ class ProductForm extends Component {
             />
             {this.renderErrorText("description")}
           </div>
-          <button
-            type="submit"
-            className="btn btn-success"
-            onClick={(e) => this.addNewProduct(e)} 
-          >{(this.state.isEditPage) ? 'edit' : 'add'}
-          </button>
-          <button
-            type="reset"
-            className="btn btn-secondary"
-            onClick={(e) => this.resetForm()}
-            data-target="#exampleModal"  
-          >
-            reset
-          </button>
+          <div className="form-btn">
+            <button
+              type="submit"
+              className="btn btn-success"
+              onClick={(e) => this.addNewProduct(e)} 
+            >{(this.state.isEditPage) ? 'edit' : 'add'}
+            </button>
+            <button
+              type="reset"
+              className="btn btn-secondary"
+              onClick={(e) => this.resetForm()}
+              data-target="#exampleModal"  
+            >
+              reset
+            </button>
+          </div>
         </form>
         {this.renderModal()}
       </div>
