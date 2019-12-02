@@ -186,7 +186,9 @@ class Products extends Component {
           <div className="product-list">
             {this.renderAlertMessage()}
 
-            <Link className="float-right mt-3 mb-3 btn btn-danger" to="/admin/add">Add new Product</Link>
+            <div className="add-new-block">
+              <Link className="add-new-button mt-3 mb-3 btn btn-danger" to="/admin/add">Add new Product</Link>
+            </div>
           
             <div className="table-responsive">
               {this.renderPrdList()}

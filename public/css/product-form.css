@@ -10,3 +10,13 @@
 	text-transform: capitalize;
 	margin-right: 10px;
 }
+
+@media (max-width: 576px) {
+	.content .input-form .form-element {
+		margin-bottom: 20px;
+	}
+
+	.content .input-form .form-btn {
+		text-align: center;
+	}
+}

@@ -18,3 +18,17 @@
 .content .product-list table td .delete-icon {
 	cursor: pointer;
 }
+
+.content .product-list .add-new-button {
+	float: right;
+}
+
+@media (max-width: 576px) {
+	.content .product-list .add-new-block {
+		text-align: center;
+	}
+
+	.content .product-list .add-new-block .add-new-button {
+		float: none;
+	}
+}
