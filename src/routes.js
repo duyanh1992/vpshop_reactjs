@@ -4,7 +4,7 @@ import ProductForm from './components/Admin/Main/ProductForm';
 
 const routes = [
   {
-    path: '/',
+    path: '/admin',
     exact: true,
     main: () => <Products />
   },
