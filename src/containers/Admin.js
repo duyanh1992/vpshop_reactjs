@@ -35,7 +35,6 @@ class Admin extends Component {
             <Title />
 
             {this.showPageContent(routes)}
-
           </div>
         </div>
 

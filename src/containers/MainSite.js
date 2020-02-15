@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Header from './mainsite/common/Header'
-import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 import color from '../theme/color';
+import MainContent from './mainsite/MainContent';
 
 const Main = styled.div`
     width: 70%;
@@ -16,6 +16,7 @@ export default class MainSite extends Component {
         return (
             <Main className="main">
                 <Header />
+                <MainContent />
             </Main>
         )
     }
