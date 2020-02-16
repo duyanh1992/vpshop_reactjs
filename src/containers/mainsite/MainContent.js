@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import Categories from './common/Categories'
 import Products from './Products';
 import ProductList from './ProductList';
+import SignForm from '../../containers/mainsite/SignForm';
+import DetailProduct from '../../containers/mainsite/DetailProduct';
+import Cart from '../../containers/mainsite/Cart';
 
 export default class MainContent extends Component {
     render() {
@@ -13,7 +16,10 @@ export default class MainContent extends Component {
                         <Categories />
 
                         {/* <Products /> */}
-                        <ProductList />
+                        {/* <ProductList /> */}
+                        {/* <SignForm /> */}
+                        {/* <DetailProduct /> */}
+                        <Cart />
                     </div>
                 </div>
             {/* End main content */}
