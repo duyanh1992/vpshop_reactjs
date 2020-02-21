@@ -3,23 +3,10 @@ import Menu from '../components/Admin/Menu';
 import Banner from '../components/Admin/Banner';
 import Title from '../components/Admin/Title';
 import Footer from '../components/Admin/Footer';
-import { Route } from 'react-router-dom';
 import routes from '../routes';
+import { showPageContent } from '../common/utils';
 
 class Admin extends Component {
-  showPageContent(routes) {
-    let result = null;
-
-    if (routes.length > 0) {
-      result = routes.map((route, index) => {
-        return (
-          <Route key={index} exact={route.exact} path={route.path} component={route.main} />
-        )
-      });
-    }
-    return result;
-  }
-
   render() {
     return (
       <div className="container">
@@ -34,7 +21,7 @@ class Admin extends Component {
           <div className="container">
             <Title />
 
-            {this.showPageContent(routes)}
+            {showPageContent(routes)}
           </div>
         </div>
 

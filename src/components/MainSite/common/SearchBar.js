@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SearchIcon = styled.div`
@@ -41,10 +42,10 @@ export default class SearchBar extends Component {
                         User
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a className="dropdown-item" href="#a">Sign up</a>
-                        <a className="dropdown-item" href="#a">Sign in</a>
-                        <a className="dropdown-item" href="#a">Sign out</a>
-                        <a className="dropdown-item" href="#a">My cart</a>
+                        <Link className="dropdown-item" to="/sign-form">Sign up</Link>
+                        <Link className="dropdown-item" to="/sign-form">Sign in</Link>
+                        <Link className="dropdown-item" to="/cart">My cart</Link>
+                        <Link className="dropdown-item" to="#a">Sign out</Link>
                     </div>  
                 </div>
             </div>

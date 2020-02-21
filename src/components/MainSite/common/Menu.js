@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import color from '../../../theme/color';
 
@@ -53,13 +54,13 @@ export default class Menu extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item menu-active">
-                                <a className="nav-link text-white" href="#a">Home</a>
+                                <Link className="nav-link text-white" to="/main-products">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#a">Manage user</a>
+                                <Link className="nav-link" href="#a">Manage user</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#a">Website</a>
+                                <Link className="nav-link" href="#a">Website</Link>
                             </li>
                         </ul>
                     </div>
