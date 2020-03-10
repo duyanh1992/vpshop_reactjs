@@ -1,6 +1,12 @@
 import axios from 'axios';
+import { API_URL } from '../constants/config';
 
-export default function callApi(apiUrl, endpoint, data=null, method='get') {
+export default function callApi(
+  apiUrl=API_URL,
+  endpoint,
+  data=null,
+  method='get'
+  ) {
   return axios({
     method,
     url: apiUrl+endpoint,

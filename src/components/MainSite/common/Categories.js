@@ -30,27 +30,24 @@ const Category = styled.div`
 `;
 
 export default class Categories extends Component {
+    renderCategories(data) {
+        const result = data.map(category => 
+            <li key={category.id}><a href="#a">{category.name}</a></li>
+        );
+
+        return result;
+    }
+
     render() {
+        const { categories } = this.props;
         return (
             /* Category */
             <div className="col-md-3">                   
                 <Category className="categories">
-                    <h3 className="title">phone categories</h3>
-                    <ul className="category-list">
-                    <li><a href="#a">iPhone</a></li>
-                    <li><a href="#a">Samsung</a></li>
-                    <li><a href="#a">Sony Ericson</a></li>
-                    <li><a href="#a">LG</a></li>
-                    <li><a href="#a">HTC</a></li>
-                    <li><a href="#a">Nokia</a></li>
-                    <li><a href="#a">Blackberry</a></li>
-                    <li><a href="#a">Asus</a></li>
-                    <li><a href="#a">Lenovo</a></li>
-                    <li><a href="#a">Motorola</a></li>
-                    <li><a href="#a">Mobiado</a></li>
-                    <li><a href="#a">Vertu</a></li>
-                    <li><a href="#a">QMobile</a></li>
-                    </ul>
+                <h3 className="title">phone categories</h3>
+                <ul className="category-list">
+                    {this.renderCategories(categories)}
+                </ul>
                 </Category>  
             </div>
             /* End category  */
