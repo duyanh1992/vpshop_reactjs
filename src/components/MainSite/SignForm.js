@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Title from '../../theme/styles/Title';
 import validator from 'validator';
 import { message } from '../../constants/message';
+import AlertMessage2 from '../../components/AlerMessage2';
 
 const FormStyle = styled.div`
     label {
@@ -26,20 +27,21 @@ export default class SignForm extends Component {
         super(props);
 
         this.state = {
+            error: false,
             name: {
                 value: '',
-                error: ''
+                error: false
             },
 
             email: {
                 value: '',
-                error: '',
-                isEmail: false
+                error: false,
+                isNotEmail: false
             },
 
             password: {
                 value: '',
-                error: ''
+                error: false
             }
         }
 
@@ -47,6 +49,11 @@ export default class SignForm extends Component {
         this.handleBlur = this.handleBlur.bind(this);
         this.checkIfStringIsEmpty = this.checkIfStringIsEmpty.bind(this);
         this.editState = this.editState.bind(this);
+        this.setItem = this.setItem.bind(this);
+    }
+
+    setItem(name, value) {
+        this.setState({ [name]: value });
     }
 
     editState(stateName, value, valueName = 'value') {
@@ -69,26 +76,53 @@ export default class SignForm extends Component {
         this.checkIfStringIsEmail(name, value);
     }
 
+    onSubmit(e) {
+        e.preventDefault();
+        
+        const { name, email, password } = this.state;
+
+        if(
+            !name.error 
+            && !email.error
+            && !password.error
+            && !email.isNotEmail
+            && email.value
+            && name.value
+            && password.value
+        ) {
+            
+        }
+        else {
+            this.setState({error: true}, () => {
+                window.setTimeout(() => {
+                    this.setState({error:false});
+                }, 6000)
+            })
+        }
+    }
+
     checkIfStringIsEmpty(name, str) {
         const result = validator.isEmpty(str);
         this.editState(name, result, 'error');
     }
 
     checkIfStringIsEmail(name, str) {
-        const result = validator.isEmail(str);
-        this.editState(name, !result, 'isEmail');
+        if (name === 'email') {
+            const result = validator.isEmail(str);
+            this.editState(name, !result, 'isNotEmail');
+        }
     }
 
-    renderInputErrorMessage(name, type) {
+    renderInputErrorMessage(name) {
         if(this.state[name].error) {
             return (
-                <span class="error-message">{message.form.require}</span>
+                <span className="error-message">{message.form.require}</span>
             );
         }
 
-        if(name === 'email' && this.state[name].isEmail) {
+        if(name === 'email' && this.state[name].isNotEmail) {
             return (
-                <span class="error-message">{message.form.email}</span>
+                <span className="error-message">{message.form.email}</span>
             );
         }
     }
@@ -114,6 +148,16 @@ export default class SignForm extends Component {
         );
     }
 
+    renderAlertMessage() {
+        const { error } = this.state;
+
+        return error ? <AlertMessage2
+                            content="Check the information you have filled in" 
+                            isOpen={this.state.error}
+                            type="danger"
+                        /> : '';
+    }
+
     render() {
         return (
             /* Form */
@@ -121,6 +165,9 @@ export default class SignForm extends Component {
                 <div className="form-title mb-4">
                     <Title className="title">user sign up</Title>
                 </div>
+
+                {this.renderAlertMessage()}
+
                 <FormStyle className="sign-form">
                     <form>
                         <div className="container">
@@ -129,7 +176,13 @@ export default class SignForm extends Component {
                             {this.renderInputText('email', 'text')}
                         </div>
                         <div className="col-md-12 offset-2">
-                            <button type="submit" className="btn btn-primary">sign up</button>
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                                onClick={e => this.onSubmit(e)}
+                            >
+                            sign up
+                            </button>
                         </div>
                     </form>
                 </FormStyle>
