@@ -4,6 +4,7 @@ import Title from '../../theme/styles/Title';
 import validator from 'validator';
 import { message } from '../../constants/message';
 import AlertMessage2 from '../../components/AlerMessage2';
+import ModalSample2 from '../../containers/ModalSample2';
 
 const FormStyle = styled.div`
     label {
@@ -90,7 +91,7 @@ export default class SignForm extends Component {
             && name.value
             && password.value
         ) {
-            
+           this.props.setToggleModal(true);
         }
         else {
             this.setState({error: true}, () => {
@@ -153,9 +154,13 @@ export default class SignForm extends Component {
 
         return error ? <AlertMessage2
                             content="Check the information you have filled in" 
-                            isOpen={this.state.error}
+                            isOpen={error}
                             type="danger"
                         /> : '';
+    }
+
+    renderModal() {
+        return <ModalSample2 /> ;
     }
 
     render() {
@@ -186,6 +191,8 @@ export default class SignForm extends Component {
                         </div>
                     </form>
                 </FormStyle>
+
+                {this.renderModal()}
             </div>
             /* End form */
         )
