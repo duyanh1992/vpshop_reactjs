@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Header from './mainsite/common/Header'
+import Header from './Mainsite/common/Header'
 import styled from 'styled-components';
 import color from '../theme/color';
-import MainContent from './mainsite/MainContent';
+import MainContent from './Mainsite/MainContent';
 
 const Main = styled.div`
     width: 70%;

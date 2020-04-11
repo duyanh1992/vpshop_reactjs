@@ -1,9 +1,9 @@
 import React from 'react';
-import Products from './components/MainSite/Products';
-import ProductList from './components/MainSite/ProductList';
-import SignForm from './components/MainSite/SignForm';
-import DetailProduct from './components/MainSite/DetailProduct';
-import Cart from './components/MainSite/Cart';
+import Products from './containers/Mainsite/Products';
+import ProductList from './containers/Mainsite/ProductList';
+import SignForm from './containers/Mainsite/SignForm';
+import DetailProduct from './containers/Mainsite/DetailProduct';
+import Cart from './containers/Mainsite/Cart';
 
 const mainRoutes = [
     {
