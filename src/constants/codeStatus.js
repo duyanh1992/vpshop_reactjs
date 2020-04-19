@@ -1,3 +1,4 @@
 export const STATUS_CODE = {
-    SUCCCESS: 200
+    GET_SUCCCESS: 200,
+    INSERT_SUCCESS: 201
 };

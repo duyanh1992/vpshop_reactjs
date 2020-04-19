@@ -12,7 +12,7 @@ function* watchFetchCategory() {
         const result = yield call(callApi, API_URL, 'categories');
         const { data, status } = result;
 
-        if (status === STATUS_CODE.SUCCCESS) {
+        if (status === STATUS_CODE.GET_SUCCCESS) {
             yield put(fetchCategoriesSuccess(data));    
         }
     }

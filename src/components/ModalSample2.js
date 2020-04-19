@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React from 'react';
+import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
-const ModalSample2 = ({isOpen, setToggleModal}) => {
+const ModalSample2 = ({isOpen, setToggleModal, setToggleModalConfirm}) => {
   return (
     <div>
       <Modal isOpen={isOpen}>
@@ -9,7 +9,12 @@ const ModalSample2 = ({isOpen, setToggleModal}) => {
             <b>Are you sure?</b>  
         </ModalBody>
         <ModalFooter>
-          <Button color="primary">Do Something</Button>{' '}
+          <Button
+            color="primary"
+            onClick={() => { setToggleModal(false); setToggleModalConfirm(true); }}
+          >Confirm
+          </Button>{' '}
+
           <Button 
             color="secondary"
             onClick={() => setToggleModal(false)}

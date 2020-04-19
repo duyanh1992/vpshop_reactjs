@@ -6,3 +6,10 @@ export const setToggleModal = actionType => {
         actionType
     };
 }
+
+export const setToggleModalConfirm = actionType => {
+    return {
+        type: mainSiteTypes.SET_TOGGLE_MODAL_CONFIRM,
+        actionType
+    };
+}

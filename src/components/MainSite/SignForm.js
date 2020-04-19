@@ -5,6 +5,7 @@ import validator from 'validator';
 import { message } from '../../constants/message';
 import AlertMessage2 from '../../components/AlerMessage2';
 import ModalSample2 from '../../containers/ModalSample2';
+import { Redirect } from 'react-router-dom';
 
 const FormStyle = styled.div`
     label {
@@ -16,7 +17,7 @@ const FormStyle = styled.div`
 
     span.error-message { color: red }
 
-    button[type="submit"] {
+    button[type="submit"], button[type="reset"] {
         text-transform: capitalize;
         border-radius: 20px;
         padding: 5px 15px;
@@ -28,7 +29,10 @@ export default class SignForm extends Component {
         super(props);
 
         this.state = {
+            timeOutPoint: null,
+            isLoggedIn: false,
             error: false,
+            success: false,
             name: {
                 value: '',
                 error: false
@@ -46,11 +50,51 @@ export default class SignForm extends Component {
             }
         }
 
+        this.defaultState = this.state;
+
         this.handleChange = this.handleChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.checkIfStringIsEmpty = this.checkIfStringIsEmpty.bind(this);
         this.editState = this.editState.bind(this);
         this.setItem = this.setItem.bind(this);
+        this.resetForm = this.resetForm.bind(this);
+    }
+
+    static getDerivedStateFromProps(nextProps) {
+        if(nextProps.newUser && nextProps.newUser.length > 0) {
+            return {
+                success: true,
+            };
+        }
+
+        return null;
+    }
+
+    componentDidUpdate() {
+        const { modalConfirmed } = this.props;
+
+        if(modalConfirmed) {
+            const { name, email, password } = this.state;
+
+            const signUpData = {
+                name: name.value,
+                email: email.value,
+                password: password.value,
+                level: 2
+            };
+
+            this.props.signUp(signUpData);
+        }
+
+        if(this.state.success) {
+            this.timeOutPoint = window.setTimeout(() => {
+                this.setState({isLoggedIn: true});
+            }, 6000)
+        }
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeOutPoint);
     }
 
     setItem(name, value) {
@@ -79,7 +123,6 @@ export default class SignForm extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        
         const { name, email, password } = this.state;
 
         if(
@@ -100,6 +143,10 @@ export default class SignForm extends Component {
                 }, 6000)
             })
         }
+    }
+
+    resetForm() {
+        this.setState(() => this.defaultState);
     }
 
     checkIfStringIsEmpty(name, str) {
@@ -129,6 +176,10 @@ export default class SignForm extends Component {
     }
 
     renderInputText(name, type) {
+        const { match } = this.props;
+        
+        if(name === 'email' && match.path === '/sign-in') return '';
+
         const inputBorder = this.state[name].error ? 'red' : '#ced4da';
 
         return (
@@ -150,12 +201,14 @@ export default class SignForm extends Component {
     }
 
     renderAlertMessage() {
-        const { error } = this.state;
+        const { error, success } = this.state;
+        const errorMes = "Check the information you have filled in";
+        const successSignUpMes = "Sign Up successfully ! Sign In again. System will redirect automatically !";
 
-        return error ? <AlertMessage2
-                            content="Check the information you have filled in" 
-                            isOpen={error}
-                            type="danger"
+        return (error || success) ? <AlertMessage2
+                            content={error ? errorMes : successSignUpMes}
+                            isOpen={error || success}
+                            type={ error ? "danger" : 'success'}
                         /> : '';
     }
 
@@ -164,11 +217,19 @@ export default class SignForm extends Component {
     }
 
     render() {
+        const { isLoggedIn } = this.state;
+        const { match } = this.props;
+
+        const formType = (match.path === '/sign-up' ? 'sign up' : 'sign in');
+
+        if(isLoggedIn)
+            return <Redirect to='/sign-in' />;
+
         return (
             /* Form */
             <div className="col-md-9">
                 <div className="form-title mb-4">
-                    <Title className="title">user sign up</Title>
+                    <Title className="title">{`user ${formType}`}</Title>
                 </div>
 
                 {this.renderAlertMessage()}
@@ -186,7 +247,15 @@ export default class SignForm extends Component {
                                 className="btn btn-primary"
                                 onClick={e => this.onSubmit(e)}
                             >
-                            sign up
+                            {`${formType}`}
+                            </button>
+
+                            <button
+                                type="reset"
+                                className="btn btn-secondary"
+                                onClick={this.resetForm}
+                            >
+                            reset
                             </button>
                         </div>
                     </form>
