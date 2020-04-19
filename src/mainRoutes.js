@@ -1,7 +1,8 @@
 import React from 'react';
 import Products from './containers/Mainsite/Products';
 import ProductList from './containers/Mainsite/ProductList';
-import SignForm from './containers/Mainsite/SignForm';
+import SignUp from './containers/Mainsite/SignUp';
+import SignIn from './containers/Mainsite/SignIn';
 import DetailProduct from './containers/Mainsite/DetailProduct';
 import Cart from './containers/Mainsite/Cart';
 
@@ -25,9 +26,15 @@ const mainRoutes = [
     },
 
     {
-        path: '/sign-form',
+        path: '/sign-in',
         exact: false,
-        main: () => <SignForm />
+        main: ({match}) => <SignIn match={match} />
+    },
+
+    {
+        path: '/sign-up',
+        exact: false,
+        main: ({match}) => <SignUp match={match}/>
     },
 
     {

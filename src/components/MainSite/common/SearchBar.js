@@ -42,8 +42,8 @@ export default class SearchBar extends Component {
                         User
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to="/sign-form">Sign up</Link>
-                        <Link className="dropdown-item" to="/sign-form">Sign in</Link>
+                        <Link className="dropdown-item" to="/sign-up">Sign up</Link>
+                        <Link className="dropdown-item" to="/sign-in">Sign in</Link>
                         <Link className="dropdown-item" to="/cart">My cart</Link>
                         <Link className="dropdown-item" to="#a">Sign out</Link>
                     </div>  

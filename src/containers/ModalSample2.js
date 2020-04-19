@@ -12,6 +12,7 @@ class ModalSample2Container extends Component {
             <ModalSample2 
                 isOpen={modal.isOpen}
                 setToggleModal={modalFunctions.setToggleModal}
+                setToggleModalConfirm={modalFunctions.setToggleModalConfirm}
             />
         )
     }
