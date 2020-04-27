@@ -23,7 +23,33 @@ const SearchBox = styled.input`
 `;
 
 export default class SearchBar extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isSignedIn: false,
+        }
+    }
+
+    static getDerivedStateFromProps(nextProps) {
+        if (localStorage.hasOwnProperty('currentUser')) {
+            return {
+                isSignedIn: true,
+            };
+        }
+
+        return null;
+    }
+
     render() {
+        const { isSignedIn } = this.state;
+        let userContent = 'User';
+
+        if(isSignedIn) {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            userContent = 'Welcome '+currentUser[0].name;
+        }
+
         return (
             /* Search bar */
             <div className="row mb-4 d-flex justify-content-between">
@@ -39,11 +65,15 @@ export default class SearchBar extends Component {
                 </div>
                 <div className="dropdown mr-3">
                     <a className="nav-link dropdown-toggle text-secondary font-weight-bold" href="#a" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        User
+                        {userContent}
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to="/sign-up">Sign up</Link>
-                        <Link className="dropdown-item" to="/sign-in">Sign in</Link>
+                        { !isSignedIn &&
+                            <div>
+                                <Link className="dropdown-item" to="/sign-up">Sign up</Link>
+                                <Link className="dropdown-item" to="/sign-in">Sign in</Link>
+                            </div>
+                        }
                         <Link className="dropdown-item" to="/cart">My cart</Link>
                         <Link className="dropdown-item" to="#a">Sign out</Link>
                     </div>  

@@ -3,7 +3,8 @@ import { API_URL } from '../constants/config';
 import { STATUS_CODE } from '../constants/codeStatus';
 import * as mainSiteTypes from './../constants/mainsite';
 import callApi from '../utils/apiCaller';
-import { signUpSuccess } from './../actions/user';
+import { signUpSuccess, signInRespond } from './../actions/user';
+import { setToggleModalConfirm } from './../actions/modal';
 
 function* watchUserSignUp() {
     const { signUpData } = yield take(mainSiteTypes.SIGN_USER_UP);
@@ -16,8 +17,25 @@ function* watchUserSignUp() {
     }
 }
 
+function* watchUserSignIn() {
+    while(true) {
+        const { signInData } = yield take(mainSiteTypes.SIGN_USER_IN);
+
+        const result = yield call(callApi, API_URL, 'users');
+        const { data } = result;
+
+        const currentUser = data.find(user => {
+            return user.name === signInData.name && user.password === signInData.password;
+        });
+
+        yield put(signInRespond(currentUser));
+        yield put(setToggleModalConfirm(false));
+    }
+}
+
 function* users() {
     yield fork(watchUserSignUp);
+    yield fork(watchUserSignIn);
 }
 
 export default users;
