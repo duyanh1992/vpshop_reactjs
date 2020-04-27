@@ -30,9 +30,12 @@ export default class SignForm extends Component {
 
         this.state = {
             timeOutPoint: null,
-            isLoggedIn: false,
+            isSignedUp: false,
+            isSignedIn: false,
+            isSignUpPage: true,
+            signInSuccess: false,
             error: false,
-            success: false,
+            signUpSuccess: false,
             name: {
                 value: '',
                 error: false
@@ -58,43 +61,86 @@ export default class SignForm extends Component {
         this.editState = this.editState.bind(this);
         this.setItem = this.setItem.bind(this);
         this.resetForm = this.resetForm.bind(this);
+        this.setError = this.setError.bind(this);
     }
 
-    static getDerivedStateFromProps(nextProps) {
+    componentDidMount() {
+       this.setSignPageType();
+    }
+
+    static getDerivedStateFromProps(nextProps, state) {
         if(nextProps.newUser && nextProps.newUser.length > 0) {
             return {
-                success: true,
+                signUpSuccess: true,
             };
+        }
+
+        if(!state.isSignUpPage && nextProps.users.currentUser.length > 0 && !state.error) {
+            return { 
+                signInSuccess: true,
+            };
+        }
+
+        if(!state.isSignUpPage && nextProps.users.didCheckLogin){
+            if (nextProps.users.currentUser.length <= 0) {
+                return { error: true};
+            }
+
+            return { error: false};
         }
 
         return null;
     }
 
     componentDidUpdate() {
-        const { modalConfirmed } = this.props;
+        const { modalConfirmed, users } = this.props;
+        const { isSignUpPage } = this.state;
 
         if(modalConfirmed) {
-            const { name, email, password } = this.state;
+            this.props.setToggleModalConfirm(false);
 
-            const signUpData = {
-                name: name.value,
-                email: email.value,
-                password: password.value,
-                level: 2
-            };
+            if(isSignUpPage) {
+                const { name, email, password } = this.state;
 
-            this.props.signUp(signUpData);
+                const signUpData = {
+                    name: name.value,
+                    email: email.value,
+                    password: password.value,
+                    level: 2
+                };
+
+                this.props.signUp(signUpData);
+            }
+
+            else {
+                const { name, password } = this.state;
+
+                const signInData = {
+                    name: name.value,
+                    password: password.value,
+                };
+
+                this.props.signIn(signInData);
+            }
         }
 
-        if(this.state.success) {
+        if(this.state.signUpSuccess) {
             this.timeOutPoint = window.setTimeout(() => {
-                this.setState({isLoggedIn: true});
+                this.setState({isSignedUp: true});
             }, 6000)
+        }
+
+        if(this.state.signInSuccess) {
+            this.timeOutPoint = window.setTimeout(() => {
+                localStorage.setItem('currentUser', JSON.stringify(users.currentUser));
+                this.setState({isSignedIn: true});
+            }, 6000);
         }
     }
 
     componentWillUnmount() {
         clearTimeout(this.timeOutPoint);
+        this.props.setToggleModalConfirm(false);
     }
 
     setItem(name, value) {
@@ -108,6 +154,14 @@ export default class SignForm extends Component {
                 [valueName]: value
             }
         }));
+    }
+
+    setError() {
+        this.setState({error: true}, () => {
+            window.setTimeout(() => {
+                this.setState({error:false});
+            }, 6000)
+        })
     }
 
     handleChange(e, name) {
@@ -124,6 +178,7 @@ export default class SignForm extends Component {
     onSubmit(e) {
         e.preventDefault();
         const { name, email, password } = this.state;
+        const { isSignUpPage,  } = this.state;
 
         if(
             !name.error 
@@ -133,20 +188,34 @@ export default class SignForm extends Component {
             && email.value
             && name.value
             && password.value
+            && isSignUpPage
         ) {
-           this.props.setToggleModal(true);
+            this.props.setToggleModal(true);
         }
+
+        else if (
+            !name.error 
+            && !password.error
+            && name.value
+            && password.value
+            && !isSignUpPage
+        ) {
+            this.props.setToggleModal(true);
+        }
+
         else {
-            this.setState({error: true}, () => {
-                window.setTimeout(() => {
-                    this.setState({error:false});
-                }, 6000)
-            })
+            this.setError();
         }
     }
 
     resetForm() {
         this.setState(() => this.defaultState);
+        this.setSignPageType();
+    }
+
+    setSignPageType() {
+        const { match } = this.props;
+        if(match.path === '/sign-in') this.setItem('isSignUpPage', false);
     }
 
     checkIfStringIsEmpty(name, str) {
@@ -201,15 +270,20 @@ export default class SignForm extends Component {
     }
 
     renderAlertMessage() {
-        const { error, success } = this.state;
+        const { error, signUpSuccess, signInSuccess } = this.state;
         const errorMes = "Check the information you have filled in";
         const successSignUpMes = "Sign Up successfully ! Sign In again. System will redirect automatically !";
+        const successSignInMes = "Sign In successfully ! System will redirect automatically !";
 
-        return (error || success) ? <AlertMessage2
-                            content={error ? errorMes : successSignUpMes}
-                            isOpen={error || success}
+        const content = error ? errorMes : (signUpSuccess ? successSignUpMes : successSignInMes)
+
+        return (error || signUpSuccess || signInSuccess) 
+                        ? <AlertMessage2
+                            content={content}
+                            isOpen={error || signUpSuccess || signInSuccess}
                             type={ error ? "danger" : 'success'}
-                        /> : '';
+                        /> 
+                        : '';
     }
 
     renderModal() {
@@ -217,13 +291,16 @@ export default class SignForm extends Component {
     }
 
     render() {
-        const { isLoggedIn } = this.state;
+        const { isSignedUp, isSignedIn } = this.state;
         const { match } = this.props;
 
         const formType = (match.path === '/sign-up' ? 'sign up' : 'sign in');
 
-        if(isLoggedIn)
+        if(isSignedUp)
             return <Redirect to='/sign-in' />;
+        
+        if(isSignedIn)
+            return <Redirect to='/' />;
 
         return (
             /* Form */

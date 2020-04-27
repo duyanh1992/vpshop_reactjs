@@ -57,11 +57,8 @@ export default class Menu extends Component {
                                 <Link className="nav-link text-white" to="/main-products">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="">Manage user</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="">Website</Link>
-                            </li>
+                                <Link className="nav-link" to="/admin">Admin Page</Link>
+                            </li>                   
                         </ul>
                     </div>
                 </nav>

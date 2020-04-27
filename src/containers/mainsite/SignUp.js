@@ -15,6 +15,7 @@ class SignUpContainer extends Component {
                 modalConfirmed={modal.isConfirm}
                 newUser={users.newUser}
                 match={this.props.match}
+                setToggleModalConfirm={modalFunctions.setToggleModalConfirm}
             />
         );
     }

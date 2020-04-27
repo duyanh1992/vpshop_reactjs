@@ -13,3 +13,17 @@ export const signUpSuccess = data => {
         data
     }
 }
+
+export const signIn = signInData => {
+    return {
+        type: mainTypes.SIGN_USER_IN,
+        signInData
+    };
+}
+
+export const signInRespond = data => {
+    return {
+        type: mainTypes.SIGN_USER_IN_RESPONSE,
+        data
+    };
+}
