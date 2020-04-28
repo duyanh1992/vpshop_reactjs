@@ -5,9 +5,15 @@ import Title from '../components/Admin/Title';
 import Footer from '../components/Admin/Footer';
 import routes from '../routes';
 import { showPageContent } from '../common/utils';
+import { Redirect } from 'react-router-dom';
 
 class Admin extends Component {
   render() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if(!currentUser || currentUser[0].level !== 1) 
+      return <Redirect to='/' />
+
     return (
       <div className="container">
         <div className="wrapper mt-3">
