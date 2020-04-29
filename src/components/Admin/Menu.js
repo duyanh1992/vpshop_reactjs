@@ -38,6 +38,9 @@ class Menu extends Component {
   }
 
   render() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const userName = (currentUser[0].name) || 'user';
+
     return (
       <div className="menu">
         <nav className="navbar navbar-expand-lg navbar-light">
@@ -51,7 +54,7 @@ class Menu extends Component {
             
             <div className="dropdown">
               <a className="nav-link dropdown-toggle" href="/a" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Welcome, User !
+                Welcome, <span style={{ color: 'red' }}>{userName}</span> !
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a className="dropdown-item" href="a">Logout</a>

@@ -44,10 +44,12 @@ export default class SearchBar extends Component {
     render() {
         const { isSignedIn } = this.state;
         let userContent = 'User';
+        let userNameStyle = {};
 
         if(isSignedIn) {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            userContent = 'Welcome '+currentUser[0].name;
+            userContent = currentUser[0].name;
+            userNameStyle = {color: 'red'};
         }
 
         return (
@@ -65,7 +67,7 @@ export default class SearchBar extends Component {
                 </div>
                 <div className="dropdown mr-3">
                     <a className="nav-link dropdown-toggle text-secondary font-weight-bold" href="#a" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {userContent}
+                        Welcome <span style={userNameStyle}>{userContent}</span>
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                         { !isSignedIn &&
