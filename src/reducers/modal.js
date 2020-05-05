@@ -2,7 +2,8 @@ import * as mainSiteTypes from './../constants/mainsite';
 
 const initialState = {
     isOpen: false,
-    isConfirm: false
+    isConfirm: false,
+    confirmType: 'normal'
 };
 
 const modal = (state = initialState, action) => {
@@ -12,7 +13,7 @@ const modal = (state = initialState, action) => {
         }
 
         case mainSiteTypes.SET_TOGGLE_MODAL_CONFIRM: {
-            return {...state, isConfirm: action.actionType};
+            return {...state, isConfirm: action.actionType, confirmType: action.confirmType};
         }
 
         default: 

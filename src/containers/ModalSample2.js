@@ -6,13 +6,14 @@ import * as modalActions from './../actions/modal';
 
 class ModalSample2Container extends Component {
     render() {
-        const { modal, modalFunctions } = this.props;
+        const { modal, modalFunctions, confirmType } = this.props;
 
         return (
             <ModalSample2 
                 isOpen={modal.isOpen}
                 setToggleModal={modalFunctions.setToggleModal}
                 setToggleModalConfirm={modalFunctions.setToggleModalConfirm}
+                confirmType={confirmType}
             />
         )
     }

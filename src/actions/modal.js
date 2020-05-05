@@ -7,9 +7,10 @@ export const setToggleModal = actionType => {
     };
 }
 
-export const setToggleModalConfirm = actionType => {
+export const setToggleModalConfirm = ( actionType, confirmType ) => {
     return {
         type: mainSiteTypes.SET_TOGGLE_MODAL_CONFIRM,
-        actionType
+        actionType,
+        confirmType
     };
 }
