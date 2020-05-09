@@ -1,10 +1,31 @@
 import React, { Component } from 'react';
 import Products from '../../components/MainSite/Products';
+import { connect } from 'react-redux';
+import * as mainProductActions from '../../actions/mainProduct';
+import { bindActionCreators } from 'redux';
 
-export default class ProductContainer extends Component {
+class ProductContainer extends Component {
     render() {
+        const { mainProductFunctions, mainProduct } = this.props;
         return (
-            <Products />
+            <Products
+                getNewProducts={mainProductFunctions.getNewProducts} 
+                newProductsOnPage={mainProduct.newProductsOnPage}
+            />
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        mainProduct : state.mainProducts
+    };
+}
+
+const mapDisptachToProps = dispatch => {
+    return {
+        mainProductFunctions : bindActionCreators(mainProductActions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDisptachToProps)(ProductContainer);
