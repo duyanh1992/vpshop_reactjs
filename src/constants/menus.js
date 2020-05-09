@@ -6,13 +6,7 @@ export const menus = [
   },
 
   {
-    path: '/asdasd',
-    exact: false,
-    label: 'manage user'
-  },
-
-  {
-    path: '/qeqwewqe',
+    path: '/',
     exact: false,
     label: 'website'
   },

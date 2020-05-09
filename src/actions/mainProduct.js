@@ -12,3 +12,17 @@ export const fetchCategoriesSuccess = data => {
         data
     }
 }
+
+export const getNewProducts = page => {
+    return {
+        type: mainSiteTypes.GET_HOME_PAGE_NEW_PRODUCTS,
+        page
+    }
+}
+
+export const getNewProductsSuccess = data => {
+    return {
+        type: mainSiteTypes.GET_HOME_PAGE_NEW_PRODUCTS_SUCCESS,
+        data
+    }
+}
