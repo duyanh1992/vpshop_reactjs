@@ -36,7 +36,7 @@ export default class NewProducts extends Component {
                                 <img alt="new-prd" style={{height: '150px'}} className="prd-img" src={product.image_url} />
                             </figure>
                             <p className="prd-name" style={{height: '40px'}}>{product.name}</p>
-                            <p className="prd-price">Giá: {product.price}</p>
+                            <p className="prd-price">Giá: {product.price} VNĐ</p>
                         </div>
                     </div>
                 </div>
@@ -44,12 +44,31 @@ export default class NewProducts extends Component {
         });
     }
 
-    render() {
-        const { newProductsOnPage } = this.props;
+    renderLoadMoreButton() {
+        const { newPrdIsLeft } = this.props;
 
         const loadMoreBtnStyle = {
             textTransform: 'capitalize',
         };
+
+        if(newPrdIsLeft) {
+            return (
+                <button 
+                    style={loadMoreBtnStyle}
+                    type="button"
+                    className="btn btn-info load-more-btn btn-lg"
+                    onClick={() => this.loadMoreItems()}
+                >
+                load more
+                </button>
+            );
+        }
+
+        return null;
+    }
+
+    render() {
+        const { newProductsOnPage } = this.props;
 
         if(newProductsOnPage.length > 0) {
             return (
@@ -60,14 +79,7 @@ export default class NewProducts extends Component {
                             {this.renderNewProducts()}
                         </div>
     
-                        <button 
-                            style={loadMoreBtnStyle}
-                            type="button"
-                            className="btn btn-info load-more-btn btn-lg"
-                            onClick={() => this.loadMoreItems()}
-                        >
-                        load more
-                        </button>
+                        {this.renderLoadMoreButton()}
                     </div>
                 </div>
             )

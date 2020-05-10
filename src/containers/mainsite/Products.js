@@ -9,8 +9,8 @@ class ProductContainer extends Component {
         const { mainProductFunctions, mainProduct } = this.props;
         return (
             <Products
-                getNewProducts={mainProductFunctions.getNewProducts} 
-                newProductsOnPage={mainProduct.newProductsOnPage}
+                mainProductFunctions={mainProductFunctions}
+                mainProduct={mainProduct}
             />
         )
     }

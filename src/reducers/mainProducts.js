@@ -1,7 +1,10 @@
 import * as mainTypes from './../constants/mainsite';
 
 const initialState = {
-    newProductsOnPage: []
+    newProductsOnPage: [],
+    specialProductsOnPage: [],
+    specialPrdIsLeft: true,
+    newPrdIsLeft: true
 };
 
 const mainProducts = (state = initialState, action) => {
@@ -14,8 +17,28 @@ const mainProducts = (state = initialState, action) => {
                 result.newProductsOnPage.push(newProducts[i]);
             }
 
+            if(newProducts.length <= 0) {
+                result.newPrdIsLeft = false;
+            }
+
             return result;
         }
+
+        case mainTypes.GET_HOME_PAGE_SPECIAL_PRODUCTS_SUCCESS: {
+            const result = {...state};
+            const specialProducts = action.data;
+
+            for(let i=0; i<specialProducts.length; i++) {
+                result.specialProductsOnPage.push(specialProducts[i]);
+            }
+
+            if(specialProducts.length <= 0) {
+                result.specialPrdIsLeft = false;
+            }
+
+            return result;
+        }
+
 
         default:
             return state;
