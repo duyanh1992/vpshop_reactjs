@@ -26,3 +26,18 @@ export const getNewProductsSuccess = data => {
         data
     }
 }
+
+export const getSpecialProducts = page => {
+    return {
+        type: mainSiteTypes.GET_HOME_PAGE_SPECIAL_PRODUCTS,
+        page
+    }
+}
+
+export const getSpecialProductsSuccess = data => {
+    return {
+        type: mainSiteTypes.GET_HOME_PAGE_SPECIAL_PRODUCTS_SUCCESS,
+        data
+    }
+}
+

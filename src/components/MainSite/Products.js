@@ -5,18 +5,23 @@ import SpecialProducts from './SpecialProducts';
 
 export default class Products extends Component {
     render() {
-        const { getNewProducts, newProductsOnPage } = this.props;
+        const { mainProductFunctions, mainProduct } = this.props;
 
         return (
             /* Products */
             <div className="col-md-9">
                 <ProductStyle className="products">
                     <NewProducts
-                        getNewProducts={getNewProducts}
-                        newProductsOnPage={newProductsOnPage}
+                        getNewProducts={mainProductFunctions.getNewProducts}
+                        newProductsOnPage={mainProduct.newProductsOnPage}
+                        newPrdIsLeft={mainProduct.newPrdIsLeft}
                     />
 
-                    <SpecialProducts />
+                    <SpecialProducts
+                        getSpecialProducts={mainProductFunctions.getSpecialProducts}
+                        specialProductsOnPage={mainProduct.specialProductsOnPage}
+                        specialPrdIsLeft={mainProduct.specialPrdIsLeft}
+                    />
                 </ProductStyle>
             </div>
         /* End products */
