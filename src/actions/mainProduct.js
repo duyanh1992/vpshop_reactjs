@@ -41,3 +41,17 @@ export const getSpecialProductsSuccess = data => {
     }
 }
 
+export const getProductListCategory = categoryId => {
+    return {
+        type: mainSiteTypes.GET_PRODUCT_LIST_CATEGORY,
+        categoryId
+    }
+}
+
+export const getProductListCategorySuccess = data => {
+    return {
+        type: mainSiteTypes.GET_PRODUCT_LIST_CATEGORY_SUCCESS,
+        data
+    }
+}
+

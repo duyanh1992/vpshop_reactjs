@@ -20,9 +20,9 @@ const mainRoutes = [
     },
 
     {
-        path: '/product-list',
+        path: '/product-list/:type/:cateId',
         exact: false,
-        main: () => <ProductList />
+        main: ({match}) => <ProductList match={match} />
     },
 
     {
