@@ -12,11 +12,14 @@ class CategoryContainer extends Component {
     }
     
     render() {
-        const { categories } = this.props;
+        const { categories, productActions } = this.props;
 
         if (categories.length > 0 ) {
             return (
-                <Categories categories={categories} />
+                <Categories
+                    categories={categories}
+                    getProductListCategory={productActions.getProductListCategory}
+                />
             )
         }
         return '';  

@@ -4,7 +4,8 @@ const initialState = {
     newProductsOnPage: [],
     specialProductsOnPage: [],
     specialPrdIsLeft: true,
-    newPrdIsLeft: true
+    newPrdIsLeft: true,
+    productList: []
 };
 
 const mainProducts = (state = initialState, action) => {
@@ -14,12 +15,14 @@ const mainProducts = (state = initialState, action) => {
             const newProducts = action.data;
 
             for(let i=0; i<newProducts.length; i++) {
-                result.newProductsOnPage.push(newProducts[i]);
+                const checkExisted = result.newProductsOnPage.findIndex((item) => {
+                    return item.id === newProducts[i].id;
+                  });
+
+                if(checkExisted === -1) result.newProductsOnPage.push(newProducts[i]);
             }
 
-            if(newProducts.length <= 0) {
-                result.newPrdIsLeft = false;
-            }
+            if(newProducts.length <= 0) result.newPrdIsLeft = false;
 
             return result;
         }
@@ -29,7 +32,11 @@ const mainProducts = (state = initialState, action) => {
             const specialProducts = action.data;
 
             for(let i=0; i<specialProducts.length; i++) {
-                result.specialProductsOnPage.push(specialProducts[i]);
+                const checkExisted = result.specialProductsOnPage.findIndex((item) => {
+                    return item.id === specialProducts[i].id;
+                  });
+
+                if(checkExisted === -1) result.specialProductsOnPage.push(specialProducts[i]);
             }
 
             if(specialProducts.length <= 0) {
@@ -39,6 +46,13 @@ const mainProducts = (state = initialState, action) => {
             return result;
         }
 
+        case mainTypes.GET_PRODUCT_LIST_CATEGORY_SUCCESS: {
+            const result = {...state};
+
+            result.productList = action.data;
+
+            return result;
+        }
 
         default:
             return state;
