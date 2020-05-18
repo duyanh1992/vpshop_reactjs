@@ -3,7 +3,11 @@ import * as mainSiteTypes from '../constants/mainsite';
 import callApi from '../utils/apiCaller';
 import { API_URL } from '../constants/config';
 import { STATUS_CODE } from '../constants/codeStatus';
-import { getNewProductsSuccess, getSpecialProductsSuccess } from './../actions/mainProduct';
+import { 
+    getNewProductsSuccess,
+    getSpecialProductsSuccess,
+    searchProductByNameSuccess
+} from './../actions/mainProduct';
 
 function* watchGetNewProducts() {
     while(true) {
@@ -46,9 +50,27 @@ function* watchGetSpecialProducts() {
     }
 }
 
+function* watchSearchProducts() {
+    while(true) {
+        const { productName } = yield take(mainSiteTypes.SEARCH_PRODUCT_BY_NAME);
+
+        const result = yield call(callApi, API_URL, 'products');
+        const { data, status } = result;
+
+        if (status === STATUS_CODE.GET_SUCCCESS) {
+            const necessaryProducts =  data.filter(product => {
+                return product.name.toLowerCase().includes(productName.toLowerCase()) === true
+            });
+
+            yield put(searchProductByNameSuccess(necessaryProducts));
+        }
+    }
+}
+
 function* products() {
     yield fork(watchGetNewProducts);
     yield fork(watchGetSpecialProducts);
+    yield fork(watchSearchProducts);
 }
 
 export default products;

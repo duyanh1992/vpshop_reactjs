@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ModalSample2 from '../../../containers/ModalSample2';
+import { message } from '../../../constants/message';
+import AlertMessage2 from './../../AlerMessage2';
 
 const SearchIcon = styled.div`
     cursor: pointer;
@@ -9,7 +11,7 @@ const SearchIcon = styled.div`
     .search-btn {
         background: #840000;
         border:none;
-	    border-radius: 0;
+        border-radius: 0;
         
         .fa-search {
             color: #b18282;
@@ -30,6 +32,8 @@ export default class SearchBar extends Component {
         this.state = {
             isSignedIn: false,
             modalOpen: false,
+            searchText: '',
+            searchError: false
         }
     }
 
@@ -70,6 +74,29 @@ export default class SearchBar extends Component {
         this.props.setToggleModal(true);
     }
 
+    handleChange(e) {
+        const { value } = e.target;
+
+        this.setState({searchText: value});
+    }
+
+    searchProduct(e) {
+        const { searchText } = this.state;
+        if(!searchText) {
+            e.preventDefault();
+
+            this.setState({searchError: true}, () => {
+                window.setTimeout(() => {
+                    this.setState({searchError: false});
+                }, 3000);
+            });
+        }
+
+        else {
+            this.props.searchProductByName(searchText);
+        }
+    }
+
     renderModal() {
         const { modalOpen } = this.state;
 
@@ -78,6 +105,16 @@ export default class SearchBar extends Component {
         }
 
         return null;
+    }
+
+    renderAlertMessage() {
+        const { searchError } = this.state;
+
+        return <AlertMessage2
+                    content={message.form.searchError}
+                    isOpen={searchError}
+                    type="danger"
+                /> 
     }
 
     render() {
@@ -99,12 +136,24 @@ export default class SearchBar extends Component {
                 <div className="row mb-4 d-flex justify-content-between">
                     <div className="col-md-3">
                         <div className="input-group search-bar">
-                            <SearchIcon className="input-group-prepend search-icon">
-                                <span className="input-group-text search-btn" id="basic-addon1">
-                                    <i className="fas fa-search" />
-                                </span>
-                            </SearchIcon>
-                            <SearchBox type="text" className="form-control search-box" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
+                            <Link to={`/product-list/${this.state.searchText}`} style={{textDecoration:'none'}}>
+                                <SearchIcon 
+                                    onClick={(e) => this.searchProduct(e)} 
+                                    className="input-group-prepend search-icon"
+                                    style={{height:'100%'}}
+                                >
+                                    <span className="input-group-text search-btn" id="basic-addon1">
+                                        <i className="fas fa-search" />
+                                    </span>
+                                </SearchIcon>
+                            </Link>
+                            <SearchBox 
+                                type="text" 
+                                className="form-control search-box"
+                                placeholder="Product name"
+                                value={this.state.searchText}
+                                onChange={e => this.handleChange(e)}
+                            />
                         </div>
                     </div>
                     <div className="dropdown mr-3">
@@ -123,6 +172,7 @@ export default class SearchBar extends Component {
                         </div>
                     </div>
                 </div>
+                {this.renderAlertMessage()}
 
                 {this.renderModal()}
             </div>

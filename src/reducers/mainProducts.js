@@ -46,7 +46,9 @@ const mainProducts = (state = initialState, action) => {
             return result;
         }
 
-        case mainTypes.GET_PRODUCT_LIST_CATEGORY_SUCCESS: {
+        case mainTypes.GET_PRODUCT_LIST_CATEGORY_SUCCESS:
+        case mainTypes.SEARCH_PRODUCT_BY_NAME_SUCCESS: 
+        {
             const result = {...state};
 
             result.productList = action.data;
