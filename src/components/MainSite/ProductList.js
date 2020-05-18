@@ -5,9 +5,11 @@ import Title from '../../theme/styles/Title';
 export default class ProductList extends Component {
     componentDidMount() {
         const { productList, match } = this.props;
+        const { key } = match.params;
 
-        if(productList.length <= 0 && match.params.cateId) {
-            this.props.getProductListCategory(match.params.cateId);
+        if(productList.length <= 0) {
+            if (parseInt(key) > 0) this.props.getProductListCategory(key);
+            else this.props.searchProductByName(key);
         }
     }
 
@@ -37,16 +39,21 @@ export default class ProductList extends Component {
 
     render() {
         let { match, categories} = this.props;
+        let categoryName = '' ;
+        let category = null;
+        const { key } = match.params;
 
-        const category = categories.find(category => category.id === match.params.cateId);
-        const categoryName = category ? category.name : '';
+        if(parseInt(key) > 0) {
+            category = categories.find(category => category.id === key);
+        }
+        categoryName = category ? category.name : key;
 
         return (
             /* Products */
             <div className="col-md-9">
                 <ProductStyle className="products">
                 <div className="product-list">
-                    <Title className="title">{categoryName}</Title>
+                    <Title className="title">{categoryName.toUpperCase()}</Title>
                     <div className="prd-list text-center mt-3 mb-3">
                         <div className="row">
                             {this.renderProduct()}

@@ -13,6 +13,7 @@ class ProductListContainer extends Component {
                 match={match}
                 productList={mainProduct.productList}
                 getProductListCategory={productActions.getProductListCategory}
+                searchProductByName={productActions.searchProductByName}
                 categories={categories}
             />
         )

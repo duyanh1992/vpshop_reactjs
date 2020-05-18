@@ -40,7 +40,7 @@ export default class Categories extends Component {
             <li key={category.id}>
                 <Link 
                     onClick={(e) => this.getCatePrdList(e, category.id)} 
-                    to={`/product-list/cateList/${category.id}`}>
+                    to={`/product-list/${category.id}`}>
                 {category.name}
                 </Link>
             </li>

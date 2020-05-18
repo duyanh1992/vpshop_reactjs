@@ -55,3 +55,16 @@ export const getProductListCategorySuccess = data => {
     }
 }
 
+export const searchProductByName = productName => {
+    return {
+        type: mainSiteTypes.SEARCH_PRODUCT_BY_NAME,
+        productName
+    }
+}
+
+export const searchProductByNameSuccess = data => {
+    return {
+        type: mainSiteTypes.SEARCH_PRODUCT_BY_NAME_SUCCESS,
+        data
+    }
+}
