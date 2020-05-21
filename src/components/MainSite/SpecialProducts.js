@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Title from '../../theme/styles/Title';
+import ProductItem from './common/ProductItem';
 
 export default class SpecialProducts extends Component {
     constructor(props) {
@@ -27,21 +28,7 @@ export default class SpecialProducts extends Component {
     renderSpecialProducts() {
         const { specialProductsOnPage } = this.props;
 
-        return specialProductsOnPage.map(product => {
-            return (
-                <div className="col-md-4" key={product.id}>
-                    <div className="prd pt-3">
-                        <div className="container">
-                            <figure>
-                                <img alt="sp-prd" style={{height: '150px'}} className="prd-img" src={product.image_url} />
-                            </figure>
-                            <p className="prd-name" style={{height: '40px'}}>{product.name}</p>
-                            <p className="prd-price">Giá: {product.price} VNĐ</p>
-                        </div>
-                    </div>
-                </div>
-            );
-        });
+        return specialProductsOnPage.map(product => <ProductItem product={product} key={product.id}/>);
     }
 
     renderLoadMoreButton() {

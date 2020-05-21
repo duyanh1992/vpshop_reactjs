@@ -38,9 +38,9 @@ const mainRoutes = [
     },
 
     {
-        path: '/detail-product',
+        path: '/detail-product/:productId',
         exact: false,
-        main: () => <DetailProduct />
+        main: ({ match }) => <DetailProduct match={match}/>
     },
 
     {

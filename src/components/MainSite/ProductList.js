@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ProductStyle from '../../theme/styles/Products';
 import Title from '../../theme/styles/Title';
+import ProductItem from './common/ProductItem';
 
 export default class ProductList extends Component {
     componentDidMount() {
@@ -17,21 +18,7 @@ export default class ProductList extends Component {
         const { productList } = this.props;
 
         if(productList.length > 0) {
-            return productList.map(product => {
-                return (
-                    <div className="col-md-4" key={product.id}>
-                        <div className="prd pt-3">
-                            <div className="container">
-                                <figure>
-                                    <img alt="prd-img" style={{height: '150px'}} className="prd-img" src={product.image_url} />
-                                </figure>
-                                <p className="prd-name" style={{height: '40px'}}>{product.name}</p>
-                                <p className="prd-price">Giá: {product.price} VNĐ</p>
-                            </div>
-                        </div>
-                    </div>
-                ); 
-            });
+            return productList.map(product => <ProductItem product={product} key={product.id}/>);
         }
 
         return <h3 className="text-center" style={{width: '100%'}}>There is no product to show</h3>;

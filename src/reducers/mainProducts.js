@@ -5,7 +5,8 @@ const initialState = {
     specialProductsOnPage: [],
     specialPrdIsLeft: true,
     newPrdIsLeft: true,
-    productList: []
+    productList: [],
+    selectedProduct: {}
 };
 
 const mainProducts = (state = initialState, action) => {
@@ -52,6 +53,14 @@ const mainProducts = (state = initialState, action) => {
             const result = {...state};
 
             result.productList = action.data;
+
+            return result;
+        }
+
+        case mainTypes.GET_PRODUCT_INFO_SUCCESS: {
+            const result = {...state};
+
+            result.selectedProduct = action.data;
 
             return result;
         }
