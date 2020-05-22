@@ -68,3 +68,17 @@ export const searchProductByNameSuccess = data => {
         data
     }
 }
+
+export const getProductInfo = productId => {
+    return {
+        type: mainSiteTypes.GET_PRODUCT_INFO,
+        productId
+    }
+}
+
+export const getProductInfoSuccess = data => {
+    return {
+        type: mainSiteTypes.GET_PRODUCT_INFO_SUCCESS,
+        data
+    }
+}
