@@ -22,3 +22,10 @@ export const getUserCartInfoSuccess = (userId, data, totalPrice) => {
         totalPrice
     };
 }
+
+export const editCartItem = editedCartItem => {
+    return {
+        type: mainSiteTypes.EDIT_CART_ITEM,
+        editedCartItem
+    };
+}

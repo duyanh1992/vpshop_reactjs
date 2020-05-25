@@ -18,6 +18,7 @@ class CartContainer extends Component {
         
         return <Cart
                     getUserCartInfo={cartFunction.getUserCartInfo}
+                    editCartItem={cartFunction.editCartItem}
                     userId={currentUser[0].id}
                     cart={cart}
                 />;    

@@ -55,9 +55,34 @@ function* watchGetUserCart() {
     }
 }
 
+function* watchEditCart() {
+    while(true) {
+        const { editedCartItem } = yield take(mainSiteTypes.EDIT_CART_ITEM);
+        
+        const cartEditInfo = yield call(callApi, API_URL, `cart/${editedCartItem.id}`, editedCartItem, 'put');
+        const { status } = cartEditInfo;
+
+        if(status === STATUS_CODE.GET_SUCCCESS) {
+            const cartInfo = yield call(callApi, API_URL, 'cart');
+
+            if(cartInfo.status === STATUS_CODE.GET_SUCCCESS) {
+                const necessaryCartItem = cartInfo.data.filter(cartItem => cartItem.user_id === editedCartItem.user_id);
+
+                let totalPrice = necessaryCartItem.reduce((item1, item2) => {
+                    return item1 + parseInt(item2.total.replace(/\./g, '')) 
+                }, 0);
+                totalPrice = formatCurency(totalPrice.toString());
+
+                yield put(getUserCartInfoSuccess(editedCartItem.user_id, necessaryCartItem, totalPrice));
+            }
+        }
+    }
+}
+
 function* cart() {
     yield fork(watchAddToCart);
     yield fork(watchGetUserCart);
+    yield fork(watchEditCart);
 }
 
 export default cart;

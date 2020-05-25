@@ -17,10 +17,14 @@ export default class Cart extends Component {
     }
 
     renderCartItems() {
-        const { cart, userId } = this.props;
+        const { cart, userId, editCartItem } = this.props;
 
         if(cart && cart.userId === userId && cart.cartItems.length > 0) {
-            return cart.cartItems.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />);
+            return cart.cartItems.map(cartItem => <CartItem 
+                                                    key={cartItem.id} 
+                                                    cartItem={cartItem}
+                                                    editCartItem={editCartItem}
+                                                />);
         }
 
         return <h3>There is no item in your cart</h3>;
@@ -36,7 +40,6 @@ export default class Cart extends Component {
                     <Title className="title">your cart</Title>
                 </div>
                 <div className="cart-list">
-                    {/* <CartItem /> */}
                     {this.renderCartItems()}
 
                     <CartFooter className="cart-footer">
