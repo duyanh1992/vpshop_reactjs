@@ -7,10 +7,18 @@ export const addProductToCart = productToCart => {
     };
 }
 
-export const addProductToCartSuccess = (productData, userId) => {
+export const getUserCartInfo = userId => {
     return {
-        type: mainSiteTypes.ADD_PRODUCT_TO_CART_SUCCESS,
-        productData,
+        type: mainSiteTypes.GET_USER_CART_INFO,
         userId
+    };
+}
+
+export const getUserCartInfoSuccess = (userId, data, totalPrice) => {
+    return {
+        type: mainSiteTypes.GET_USER_CART_INFO_SUCCESS,
+        userId,
+        data,
+        totalPrice
     };
 }

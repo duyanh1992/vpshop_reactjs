@@ -1,8 +1,10 @@
-import { take, fork, call } from 'redux-saga/effects';
+import { take, fork, call, put } from 'redux-saga/effects';
 import * as mainSiteTypes from '../constants/mainsite';
 import callApi from '../utils/apiCaller';
 import { API_URL } from '../constants/config';
 import { formatCurency } from './../constants/functions';
+import { STATUS_CODE } from '../constants/codeStatus';
+import { getUserCartInfoSuccess } from './../actions/cart';
 
 function* watchAddToCart() {
     while(true) {
@@ -25,11 +27,37 @@ function* watchAddToCart() {
                 yield call(callApi, API_URL, 'cart', productToCart, 'post');
             }
         }
+
+        else {
+            yield call(callApi, API_URL, 'cart', productToCart, 'post');
+        }
+    }
+}
+
+function* watchGetUserCart() {
+    while(true) {
+        const { userId } = yield take(mainSiteTypes.GET_USER_CART_INFO);
+
+        const cartInfo = yield call(callApi, API_URL, 'cart');
+        const { data, status } = cartInfo;
+
+        if(status === STATUS_CODE.GET_SUCCCESS) {
+            const necessaryCartItem = data.filter(cartItem => cartItem.user_id === userId);
+            
+            let totalPrice = necessaryCartItem.reduce((item1, item2) => {
+                return item1 + parseInt(item2.total.replace(/\./g, '')) 
+            }, 0);
+
+            totalPrice = formatCurency(totalPrice.toString());
+
+            yield put(getUserCartInfoSuccess(userId, necessaryCartItem, totalPrice));
+        }
     }
 }
 
 function* cart() {
     yield fork(watchAddToCart);
+    yield fork(watchGetUserCart);
 }
 
 export default cart;

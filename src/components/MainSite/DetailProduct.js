@@ -77,7 +77,8 @@ export default class DetailProduct extends Component {
                 quantity: 1,
                 total: selectedProduct.price,
                 product_id: selectedProduct.id,
-                user_id: userId
+                user_id: userId,
+                image_url: selectedProduct.image_url
             };
 
             this.props.addProductToCart(productToCart);
