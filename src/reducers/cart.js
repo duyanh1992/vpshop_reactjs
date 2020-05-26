@@ -21,7 +21,6 @@ const cart = (state = initialState, action) => {
                 cartItems: action.data,
                 cartTotal: action.totalPrice,
             };
-
             return result;
         }
 
