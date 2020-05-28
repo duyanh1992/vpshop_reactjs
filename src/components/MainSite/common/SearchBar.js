@@ -38,7 +38,7 @@ export default class SearchBar extends Component {
     }
 
     static getDerivedStateFromProps(nextProps) {
-        if (nextProps.modal.isOpen) {
+        if (nextProps.modal.isOpen && nextProps.modal.confirmType === "signOut") {
             return {
                 modalOpen: true,
             };
@@ -71,7 +71,7 @@ export default class SearchBar extends Component {
     logOut(e) {
         e.preventDefault();
 
-        this.props.setToggleModal(true);
+        this.props.setToggleModal(true, 'signOut');
     }
 
     handleChange(e) {

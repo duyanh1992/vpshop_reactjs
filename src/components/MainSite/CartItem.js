@@ -50,7 +50,7 @@ export default class CartItem extends Component {
         this.state = {
             quantity: 1,
             opacity: 0.5,
-            pointerEvents: 'none'
+            pointerEvents: 'none',
         };
     }
 
@@ -61,7 +61,9 @@ export default class CartItem extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.cartItem.quantity !== this.state.quantity && this.props.cartItem.quantity !== prevProps.cartItem.quantity) {
+        const { cartItem } = this.props;
+
+        if (cartItem.quantity !== this.state.quantity && cartItem.quantity !== prevProps.cartItem.quantity) {
             this.setState({ quantity: this.props.cartItem.quantity })
         }
     }
@@ -106,6 +108,12 @@ export default class CartItem extends Component {
         this.props.editCartItem(editedCartItem);
     }
 
+    onRemoveCartItem() {
+        const { cartItem } = this.props;
+
+        this.props.setToggleCartModal(true, 'removeCartItem', cartItem.id);
+    }
+
     render() {
         const { cartItem } = this.props;
         const { opacity , pointerEvents } = this.state;
@@ -143,7 +151,13 @@ export default class CartItem extends Component {
                                 <span className="item-total">{cartItem.total} VNĐ</span>
                             </li>
 
-                            <button type="button" className="btn btn-danger float-right">Remove</button>
+                            <button 
+                                type="button" 
+                                className="btn btn-danger float-right"
+                                onClick={() => this.onRemoveCartItem()}
+                            >Remove
+                            </button>
+                            
                             <button 
                                 type="button"
                                 className="btn btn-info edit-btn float-right mr-2"

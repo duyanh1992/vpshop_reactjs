@@ -79,10 +79,34 @@ function* watchEditCart() {
     }
 }
 
+function* watchRemoveCart() {
+    while(true) {
+        const { cartId, userId } = yield take(mainSiteTypes.REMOVE_CART_ITEM);
+
+        const removeCart = yield call(callApi, API_URL, `cart/${cartId}`, null, 'delete');
+
+        if(removeCart.status === STATUS_CODE.GET_SUCCCESS) {
+            const cartInfo = yield call(callApi, API_URL, 'cart');
+
+            if(cartInfo.status === STATUS_CODE.GET_SUCCCESS) {
+                const necessaryCartItem = cartInfo.data.filter(cartItem => cartItem.user_id === userId);
+
+                let totalPrice = necessaryCartItem.reduce((item1, item2) => {
+                    return item1 + parseInt(item2.total.replace(/\./g, '')) 
+                }, 0);
+                totalPrice = formatCurency(totalPrice.toString());
+
+                yield put(getUserCartInfoSuccess(userId, necessaryCartItem, totalPrice, true));
+            }
+        }
+    }
+}
+
 function* cart() {
     yield fork(watchAddToCart);
     yield fork(watchGetUserCart);
     yield fork(watchEditCart);
+    yield fork(watchRemoveCart);
 }
 
 export default cart;

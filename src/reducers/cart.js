@@ -4,6 +4,7 @@ const initialState = {
     userId: null,
     cartItems: [],
     cartTotal: null,
+    deleted: null
 }
 
 
@@ -20,8 +21,16 @@ const cart = (state = initialState, action) => {
                 userId: action.userId,
                 cartItems: action.data,
                 cartTotal: action.totalPrice,
+                deleted: action.deleted
             };
             return result;
+        }
+
+        case mainSiteTypes.SET_CART_ITEM_NOT_DELETED: {
+            return {
+                ...state,
+                deleted: false
+            };
         }
 
         default: 
