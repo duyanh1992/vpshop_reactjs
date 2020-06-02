@@ -14,12 +14,13 @@ export const getUserCartInfo = userId => {
     };
 }
 
-export const getUserCartInfoSuccess = (userId, data, totalPrice) => {
+export const getUserCartInfoSuccess = (userId, data, totalPrice, deleted = false) => {
     return {
         type: mainSiteTypes.GET_USER_CART_INFO_SUCCESS,
         userId,
         data,
-        totalPrice
+        totalPrice,
+        deleted
     };
 }
 
@@ -27,5 +28,19 @@ export const editCartItem = editedCartItem => {
     return {
         type: mainSiteTypes.EDIT_CART_ITEM,
         editedCartItem
+    };
+}
+
+export const removeCartItem = (cartId, userId) => {
+    return {
+        type: mainSiteTypes.REMOVE_CART_ITEM,
+        cartId,
+        userId
+    };
+}
+
+export const setCardItemNotDeleted = () => {
+    return {
+        type: mainSiteTypes.SET_CART_ITEM_NOT_DELETED,
     };
 }
