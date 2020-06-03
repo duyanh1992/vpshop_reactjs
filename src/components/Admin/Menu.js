@@ -2,34 +2,47 @@ import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
 import { menus } from '../../constants/menus';
 
-const MenuItem = ({path, exact, label}) => {
-  return (
-    <Route
-      path={path}
-      exact={exact}
-      children={({match}) => {
-        const active = match ? 'menu-active' : '';
-        const textActive = match ? 'text-white' : 'text-dark';
-
-        return (
-          <li className={`nav-item ${active}`}>
-            <Link to={path} className={`${textActive} nav-link`}>{label}</Link>
-          </li>
-        );
-      }}>
-
-    </Route>
-  );
-};
-
 class Menu extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      menuItemIndex: 0
+    };
+  };
+
+  handleMenuItemClick(index) {
+    this.setState({ menuItemIndex: index });
+  }
+
   renderMenu() {
+    const { menuItemIndex } = this.state;
     let result = null;
 
     if (menus.length > 0) {
       result = menus.map((menu, index) => {
         return (
-          <MenuItem key={index} path={menu.path} exact={menu.exact} label={menu.label} />
+          <Route
+            path={menu.path}
+            exact={menu.exact}
+            key={index}
+            children={({ match }) => {
+              const active = menuItemIndex === index ? 'menu-active' : '';
+              const textActive = menuItemIndex === index ? 'text-white' : 'text-dark';
+
+              return (
+                <li className={`nav-item ${active}`}>
+                  <Link
+                    to={menu.path}
+                    className={`nav-link ${textActive}`}
+                    onClick={() => this.handleMenuItemClick(index)}
+                  >{menu.label}
+                  </Link>
+                </li>
+              );
+            }}>
+
+          </Route>
         );
       });
     }
@@ -51,7 +64,7 @@ class Menu extends Component {
             <ul className="navbar-nav mr-auto">
               {this.renderMenu()}
             </ul>
-            
+
             <div className="dropdown">
               <a className="nav-link dropdown-toggle" href="/a" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Welcome, <span style={{ color: 'red' }}>{userName}</span> !

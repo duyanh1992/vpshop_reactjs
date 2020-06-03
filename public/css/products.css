@@ -1,4 +1,4 @@
-@import url('index.css');
+@import url("index.css");
 
 /*Start style content*/
 
@@ -6,17 +6,22 @@
 	min-height: 100px;
 }
 
-.content .product-list table th, td {
+.content .product-list table th,
+td {
 	text-transform: capitalize;
 }
 
 .content .product-list table td img {
 	width: 90px;
-  height: 150px;
+	height: 150px;
 }
 
 .content .product-list table td .delete-icon {
 	cursor: pointer;
+}
+
+.content .product-list table td .fa-edit {
+	margin-right: 3px;
 }
 
 .content .product-list .add-new-button {
@@ -30,5 +35,15 @@
 
 	.content .product-list .add-new-block .add-new-button {
 		float: none;
+	}
+
+	.content .product-list table td .fa-edit {
+		margin: 0;
+		padding-left: 6px;
+		margin-bottom: 10px;
+	}
+
+	.content .product-list table td {
+		vertical-align: middle;
 	}
 }

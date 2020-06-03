@@ -1,5 +1,5 @@
 :root {
-	--gray-color: #CDCDCD;
+	--gray-color: #cdcdcd;
 	--brown-color: #840000;
 }
 
@@ -8,14 +8,14 @@
 	padding: 0;
 }
 
-html, body {
+html,
+body {
 	height: 100%;
 }
 
 body {
-	background: url('../images/bg.gif');
+	background: url("../images/bg.gif");
 }
-
 
 /*Style header*/
 
@@ -33,7 +33,9 @@ body {
 	border-right: 1px solid var(--gray-color);
 }
 
-.menu .nav-item .nav-link, .dropdown .nav-link, .dropdown-item {
+.menu .nav-item .nav-link,
+.dropdown .nav-link,
+.dropdown-item {
 	color: black;
 	font-weight: bold;
 	text-transform: capitalize;
@@ -69,11 +71,11 @@ body {
 /*Start style content*/
 .content .title {
 	padding: 8px;
-    text-transform: capitalize;
+	text-transform: capitalize;
 }
 
 .content {
-	padding-top: 1rem
+	padding-top: 1rem;
 }
 
 /*End style content*/
@@ -81,10 +83,24 @@ body {
 /*Style footer*/
 .footer {
 	padding: 10px 0px;
-    text-transform: capitalize;
+	text-transform: capitalize;
 }
 
 .footer p {
 	margin-bottom: 0;
 }
 /*End style footer*/
+
+/*Start mobile style*/
+@media (max-width: 576px) {
+	.navbar-collapse {
+		text-align: center;
+		margin-top: 10px;
+	}
+
+	.navbar-collapse .nav-item {
+		border-bottom: 1px dotted var(--gray-color);
+	}
+}
+
+/*End mobile style*/
