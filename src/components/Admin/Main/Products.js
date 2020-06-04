@@ -6,8 +6,7 @@ import Pagination from '../Pagination';
 import ModalSample from '../../ModalSample';
 import AlertMessage from '../../AlertMessage';
 import Loading from '../../Loading';
-import 
-{ 
+import {
   fetchProductsRequest,
   fetchProductCategoriesRequest,
   deleteProductRequest,
@@ -20,7 +19,7 @@ const rowPerPage = 2;
 class Products extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       openModal: false,
       modalAction: false,
@@ -33,7 +32,7 @@ class Products extends Component {
     this.openModal = this.openModal.bind(this);
     this.openAlert = this.openAlert.bind(this);
   }
-  
+
   componentDidMount() {
     this.props.fetchProducts();
     this.props.fetchCategories();
@@ -50,11 +49,11 @@ class Products extends Component {
       this.openAlert();
     }
   }
-  
+
   renderModal() {
     if (this.state.openModal) {
       return (
-        <ModalSample 
+        <ModalSample
           modal={this.state.openModal}
           getModalAction={this.getModalAction}
         />
@@ -102,7 +101,7 @@ class Products extends Component {
       }
     }
   }
-  
+
   selectPage() {
     this.props.sendPage(this.props.products.page - 1);
   }
@@ -144,7 +143,7 @@ class Products extends Component {
     const { productList } = products;
 
     const pos = page * rowPerPage - rowPerPage;
-    const productsPerPage = productList.slice(pos, pos+2);
+    const productsPerPage = productList.slice(pos, pos + 2);
 
     if (productsPerPage.length > 0) {
       return (
@@ -157,12 +156,12 @@ class Products extends Component {
             <td>
               <img className="img-prd" src={product.image_url} alt="product" />
             </td>
-            <td>
-              <Link to={`/admin/edit/${product.id}`}><i className="fas fa-edit" /></Link>
-              <span className="delete-icon" onClick={() => this.delProduct(product.id)}><i className="fas fa-trash-alt" /></span>
+            <td class="product-action">
+              <Link to={`/admin/edit/${product.id}`}><i className="fas fa-2x fa-edit" /></Link>
+              <span className="delete-icon" onClick={() => this.delProduct(product.id)}><i className="fas fa-2x fa-trash-alt" /></span>
             </td>
-          </tr> 
-        ))  
+          </tr>
+        ))
       );
     }
     else {
@@ -182,21 +181,21 @@ class Products extends Component {
     }
 
     else {
-        return (
-          <div className="product-list">
-            {this.renderAlertMessage()}
+      return (
+        <div className="product-list">
+          {this.renderAlertMessage()}
 
-            <div className="add-new-block">
-              <Link className="add-new-button mt-3 mb-3 btn btn-danger" to="/admin/add">Add new Product</Link>
-            </div>
-          
-            <div className="table-responsive">
-              {this.renderPrdList()}
-            </div>
-            
-            <Pagination />
+          <div className="add-new-block">
+            <Link className="add-new-button mt-3 mb-3 btn btn-danger" to="/admin/add">Add new Product</Link>
           </div>
-        );
+
+          <div className="table-responsive">
+            {this.renderPrdList()}
+          </div>
+
+          <Pagination />
+        </div>
+      );
     }
   }
 }
