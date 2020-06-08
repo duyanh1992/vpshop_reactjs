@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 class ProductContainer extends Component {
     render() {
         const { mainProductFunctions, mainProduct } = this.props;
+
         return (
             <Products
                 mainProductFunctions={mainProductFunctions}
@@ -18,13 +19,13 @@ class ProductContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        mainProduct : state.mainProducts
+        mainProduct: state.mainProducts
     };
 }
 
 const mapDisptachToProps = dispatch => {
     return {
-        mainProductFunctions : bindActionCreators(mainProductActions, dispatch)
+        mainProductFunctions: bindActionCreators(mainProductActions, dispatch)
     };
 }
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import color from '../../../theme/color';
 import { Link } from "react-router-dom";
+import Loading from './Loading';
+import { fadeIn } from '../../../common/utils';
 
 const Category = styled.div`
     .title {
@@ -16,6 +18,8 @@ const Category = styled.div`
     .category-list {
         border: 1px solid ${color.gray};
         list-style: none;
+        transition: 1s;
+        animation: 1s ${fadeIn} ease-out;
 
         li {
             padding: 8px 12px;
@@ -31,35 +35,82 @@ const Category = styled.div`
 `;
 
 export default class Categories extends Component {
-    getCatePrdList(e, cateId) {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isLoading: true
+        };
+    }
+
+    getCatePrdList(cateId) {
         this.props.getProductListCategory(cateId);
     }
 
-    renderCategories(data) {
-        const result = data.map(category => 
-            <li key={category.id}>
-                <Link 
-                    onClick={(e) => this.getCatePrdList(e, category.id)} 
-                    to={`/product-list/${category.id}`}>
-                {category.name}
-                </Link>
-            </li>
-        );
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.isLoading && this.props.categories.length > 0) {
+            this.sideBarTimeout = window.setTimeout(() => {
+                this.setState({ isLoading: false });
+            }, 2000);
+        }
+    }
 
-        return result;
+    componentWillUnmount() {
+        clearTimeout(this.sideBarTimeout);
+    }
+
+    renderCategories(data) {
+        return (
+            <ul className="category-list">
+                {
+                    data.map(category => (
+                        <li key={category.id}>
+                            <Link
+                                onClick={() => this.getCatePrdList(category.id)}
+                                to={`/product-list/${category.id}`}>
+                                {category.name}
+                            </Link>
+                        </li>
+                    ))
+                }
+            </ul>
+        );
+    }
+
+    renderSideBar() {
+        const { isLoading } = this.state;
+        const { categories } = this.props
+
+        if (!isLoading) {
+            return (
+                <ul className="category-list">
+                    {
+                        categories.map(category => (
+                            <li key={category.id}>
+                                <Link
+                                    onClick={(e) => this.getCatePrdList(e, category.id)}
+                                    to={`/product-list/${category.id}`}>
+                                    {category.name}
+                                </Link>
+                            </li>
+                        ))
+                    }
+                </ul>
+            );
+        }
+
+        return <Loading />;
     }
 
     render() {
-        const { categories } = this.props;
         return (
             /* Category */
-            <div className="col-md-3">                   
+            <div className="col-md-3">
                 <Category className="categories">
-                <h3 className="title">phone categories</h3>
-                <ul className="category-list">
-                    {this.renderCategories(categories)}
-                </ul>
-                </Category>  
+                    <h3 className="title">phone categories</h3>
+                    {this.renderSideBar()}
+                </Category>
+
             </div>
             /* End category  */
         )

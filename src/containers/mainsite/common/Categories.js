@@ -6,23 +6,20 @@ import { bindActionCreators } from 'redux';
 
 class CategoryContainer extends Component {
     componentDidMount() {
-        const { productActions } =  this.props;
+        const { productActions } = this.props;
         const { fetchCategories } = productActions;
         fetchCategories();
     }
-    
+
     render() {
         const { categories, productActions } = this.props;
 
-        if (categories.length > 0 ) {
-            return (
-                <Categories
-                    categories={categories}
-                    getProductListCategory={productActions.getProductListCategory}
-                />
-            )
-        }
-        return '';  
+        return (
+            <Categories
+                categories={categories}
+                getProductListCategory={productActions.getProductListCategory}
+            />
+        )
     }
 }
 

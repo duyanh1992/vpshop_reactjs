@@ -26,29 +26,29 @@ export default class Cart extends Component {
         this.props.getUserCartInfo(this.props.userId);
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         const { modal, userId, cart } = this.props;
 
-        if(modal.isConfirm && modal.confirmType === "removeCartItem") {
+        if (modal.isConfirm && modal.confirmType === "removeCartItem") {
             this.props.setToggleModalConfirm(false);
             this.props.removeCartItem(modal.itemId, userId);
         }
 
-        if(cart.deleted 
+        if (cart.deleted
             && !prevProps.cart.deleted
         ) {
             this.props.setCardItemNotDeleted();
 
-            this.setState({justDeleteProduct: true}, () => {
+            this.setState({ justDeleteProduct: true }, () => {
                 window.setTimeout(() => {
-                    this.setState({justDeleteProduct: false});
+                    this.setState({ justDeleteProduct: false });
                 }, 3000);
             });
         }
     }
 
     renderCartItems() {
-        const { 
+        const {
             cart,
             userId,
             modal,
@@ -56,14 +56,14 @@ export default class Cart extends Component {
             setToggleCartModal,
         } = this.props;
 
-        if(cart && cart.userId === userId && cart.cartItems.length > 0) {
-            return cart.cartItems.map(cartItem => <CartItem 
-                                                    key={cartItem.id} 
-                                                    cartItem={cartItem}
-                                                    modal={modal}
-                                                    editCartItem={editCartItem}
-                                                    setToggleCartModal={setToggleCartModal}
-                                                />);
+        if (cart && cart.userId === userId && cart.cartItems.length > 0) {
+            return cart.cartItems.map(cartItem => <CartItem
+                key={cartItem.id}
+                cartItem={cartItem}
+                modal={modal}
+                editCartItem={editCartItem}
+                setToggleCartModal={setToggleCartModal}
+            />);
         }
 
         return <h3>There is no item in your cart</h3>;
@@ -72,8 +72,8 @@ export default class Cart extends Component {
     renderModal() {
         const { modal } = this.props;
 
-        if(modal.isOpen && modal.confirmType === "removeCartItem") {
-            return <ModalSample2 confirmType="removeCartItem" /> ;
+        if (modal.isOpen && modal.confirmType === "removeCartItem") {
+            return <ModalSample2 confirmType="removeCartItem" />;
         }
 
         return null;
@@ -83,15 +83,15 @@ export default class Cart extends Component {
         const { justDeleteProduct } = this.state;
 
         return <AlertMessage2
-                    content="Product was deleted from your cart successfully !!!"
-                    isOpen={justDeleteProduct}
-                    type='success'
-                /> 
+            content="Product was deleted from your cart successfully !!!"
+            isOpen={justDeleteProduct}
+            type='success'
+        />
     }
 
-    render() {    
-        const { cart } = this.props;   
-        
+    render() {
+        const { cart } = this.props;
+
         return (
             /* Cart */
             <div className="user-cart col-md-9">
