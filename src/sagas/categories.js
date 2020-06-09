@@ -6,20 +6,20 @@ import { fetchCategoriesSuccess, getProductListCategorySuccess } from './../acti
 import { STATUS_CODE } from '../constants/codeStatus';
 
 function* watchFetchCategory() {
-    while(true) {
+    while (true) {
         yield take(mainSiteTypes.FETCH_MAIN_PRODUCT_CATEGORY);
 
         const result = yield call(callApi, API_URL, 'categories');
         const { data, status } = result;
 
         if (status === STATUS_CODE.GET_SUCCCESS) {
-            yield put(fetchCategoriesSuccess(data));    
+            yield put(fetchCategoriesSuccess(data));
         }
     }
 }
 
 function* watchFetchCategoryProductList() {
-    while(true) {
+    while (true) {
         const { categoryId } = yield take(mainSiteTypes.GET_PRODUCT_LIST_CATEGORY);
 
         const result = yield call(callApi, API_URL, 'products');

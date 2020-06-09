@@ -6,7 +6,7 @@ import { fadeIn } from '../../../common/utils';
 
 const PrdItem = styled.div`
     transition: 1s;
-    animation: 0.4s ${fadeIn} linear;
+    animation: 0.8s ${fadeIn} linear;
 
     a {
         text-decoration: none;
