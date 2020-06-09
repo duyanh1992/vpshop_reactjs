@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
 import Title from '../../theme/styles/Title';
 import ProductItem from './common/ProductItem';
-import styled from 'styled-components';
-import { fadeIn } from './../../common/utils';
 import Loading from './common/Loading';
-
-const Prdlist = styled.div`
-    transition: 1s;
-    animation: 1s ${fadeIn} ease-in;
-`;
 
 export default class SpecialProducts extends Component {
     constructor(props) {
@@ -79,8 +72,8 @@ export default class SpecialProducts extends Component {
                 );
 
             return (
-                <button class="btn btn-primary" type="button" disabled>
-                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                <button className="btn btn-primary" type="button" disabled>
+                    <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     Loading...
                 </button>
             );
@@ -95,13 +88,13 @@ export default class SpecialProducts extends Component {
         if (isLoading) return <Loading />;
 
         return (
-            <Prdlist className="prd-list text-center mt-3 mb-3">
+            <div className="prd-list text-center mt-3 mb-3">
                 <div className="row">
                     {this.renderSpecialProducts()}
                 </div>
 
                 {this.renderLoadMoreButton()}
-            </Prdlist>
+            </div>
         );
     }
 

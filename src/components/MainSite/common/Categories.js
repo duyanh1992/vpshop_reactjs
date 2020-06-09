@@ -19,7 +19,7 @@ const Category = styled.div`
         border: 1px solid ${color.gray};
         list-style: none;
         transition: 1s;
-        animation: 1s ${fadeIn} ease-out;
+        animation: 0.8s ${fadeIn} ease-out;
 
         li {
             padding: 8px 12px;
@@ -59,24 +59,6 @@ export default class Categories extends Component {
         clearTimeout(this.sideBarTimeout);
     }
 
-    renderCategories(data) {
-        return (
-            <ul className="category-list">
-                {
-                    data.map(category => (
-                        <li key={category.id}>
-                            <Link
-                                onClick={() => this.getCatePrdList(category.id)}
-                                to={`/product-list/${category.id}`}>
-                                {category.name}
-                            </Link>
-                        </li>
-                    ))
-                }
-            </ul>
-        );
-    }
-
     renderSideBar() {
         const { isLoading } = this.state;
         const { categories } = this.props
@@ -88,7 +70,7 @@ export default class Categories extends Component {
                         categories.map(category => (
                             <li key={category.id}>
                                 <Link
-                                    onClick={(e) => this.getCatePrdList(e, category.id)}
+                                    onClick={() => this.getCatePrdList(category.id)}
                                     to={`/product-list/${category.id}`}>
                                     {category.name}
                                 </Link>
