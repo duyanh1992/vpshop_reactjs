@@ -53,7 +53,7 @@ export default class ProductList extends Component {
         if (parseInt(key) > 0) {
             category = categories.find(category => category.id === key);
         }
-        categoryName = category ? category.name : '';
+        categoryName = category ? category.name : key;
 
         return (
             /* Products */

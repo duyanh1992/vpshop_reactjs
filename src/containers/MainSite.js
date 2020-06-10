@@ -14,7 +14,7 @@ const Main = styled.div`
 export default class MainSite extends Component {
     render() {
         return (
-            <Main className="main">
+            <Main className="main" style={{ "overflow": "hidden" }}>
                 <Header />
                 <MainContent />
             </Main>
