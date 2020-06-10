@@ -25,23 +25,29 @@ export default class ProductList extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.productList.length > 0 && prevState.isLoading) {
-            window.setTimeout(() => {
+            this.loadingTimeout = window.setTimeout(() => {
                 this.setState({ isLoading: false });
             }, 2000);
         }
     }
 
+    componentWillUnmount() {
+        window.clearTimeout(this.loadingTimeout);
+    }
+
+
     renderProduct() {
         const { productList } = this.props;
         const { isLoading } = this.state;
+
+        if (productList.length <= 0)
+            return <h3 className="text-center" style={{ width: '100%' }}>There is no product to show</h3>;
 
         if (isLoading) return <Loading />;
 
         if (productList.length > 0) {
             return productList.map(product => <ProductItem product={product} key={product.id} />);
         }
-
-        return <h3 className="text-center" style={{ width: '100%' }}>There is no product to show</h3>;
     }
 
     render() {
