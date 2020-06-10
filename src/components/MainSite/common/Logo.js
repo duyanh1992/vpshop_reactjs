@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { logoAnimation, bannerAnimation } from '../../../common/utils';
+import { fromLeftToRight, fromRightToLeft } from '../../../common/utils';
 import styled from 'styled-components';
 
 const LogoStyle = styled.div`
-    animation: 1.5s ${logoAnimation} forwards;
+    animation: 1.5s ${fromLeftToRight(-330)} forwards;
 `;
 
 const BannerStyle = styled.div`
-    animation: 1.5s ${bannerAnimation} ease-out;
+    animation: 1.5s ${fromRightToLeft(550)} ease-out;
 `;
 
 export default class Logo extends Component {

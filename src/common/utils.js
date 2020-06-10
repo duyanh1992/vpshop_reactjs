@@ -19,12 +19,12 @@ export const fadeIn = keyframes`
   0% { opacity: 0 }
   100% { opacity: 1 }
 `
-export const logoAnimation = keyframes`
-  0% { transform: translateX(-330px) }
+export const fromLeftToRight = x => keyframes`
+  0% { transform: translateX(${x}px) }
   100% { transform: translateX(0) }
 `;
 
-export const bannerAnimation = keyframes`
-  0% { transform: translateX(580px) }
+export const fromRightToLeft = x => keyframes`
+  0% { transform: translateX(${x}px) }
   100% { transform: translateX(0) }
 `;
