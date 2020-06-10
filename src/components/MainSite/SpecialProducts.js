@@ -26,7 +26,7 @@ export default class SpecialProducts extends Component {
         if (this.props.specialProductsOnPage.length > 0 && prevState.isLoading) {
             this.timeOut = window.setTimeout(() => {
                 this.setState({ isLoading: false });
-            }, 3000);
+            }, 2000);
         }
 
         if (this.props.specialProductsOnPage.length > 0 && prevState.btnLoading) {

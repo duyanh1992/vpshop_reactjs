@@ -26,7 +26,7 @@ export default class NewProducts extends Component {
         if (this.props.newProductsOnPage.length > 0 && prevState.isLoading) {
             this.loadingTimeOut = window.setTimeout(() => {
                 this.setState({ isLoading: false });
-            }, 3000);
+            }, 2000);
         }
 
         if (this.props.newProductsOnPage.length > 0 && prevState.btnLoading) {
