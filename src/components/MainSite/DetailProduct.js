@@ -6,7 +6,7 @@ import AlertMessage2 from './../AlerMessage2';
 import { message } from '../../constants/message';
 import { Redirect } from 'react-router-dom';
 import Loading from './common/Loading';
-import { fromLeftToRight, fromRightToLeft } from '../../common/utils';
+import { fromLeftToRight } from '../../common/utils';
 
 const ProductStyle = styled.div`
     .img-product-block {
@@ -22,7 +22,7 @@ const ProductStyle = styled.div`
     }
 
     .prd-info {
-        animation: 1.5s ${fromRightToLeft(300)} ease-out;
+        animation: 1.5s ${fromLeftToRight(300)} ease-out;
 
         .prd-price {
             span {

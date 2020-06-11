@@ -56,7 +56,7 @@ export default class Categories extends Component {
     }
 
     componentWillUnmount() {
-        clearTimeout(this.sideBarTimeout);
+        window.clearTimeout(this.sideBarTimeout);
     }
 
     renderSideBar() {
