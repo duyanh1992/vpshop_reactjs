@@ -5,11 +5,12 @@ import color from '../../theme/color';
 import CartItem from './CartItem';
 import ModalSample2 from './../../containers/ModalSample2'
 import AlertMessage2 from '../../components/AlerMessage2';
+import Loading from './common/Loading';
 
 const CartFooter = styled.div`
     .cart-total {
         color: ${color.red};
-        font-weight: bold;;
+        font-weight: bold;
     }
 `;
 
@@ -18,7 +19,8 @@ export default class Cart extends Component {
         super(props);
 
         this.state = {
-            justDeleteProduct: false
+            justDeleteProduct: false,
+            isLoading: true
         };
     }
 
@@ -26,8 +28,14 @@ export default class Cart extends Component {
         this.props.getUserCartInfo(this.props.userId);
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         const { modal, userId, cart } = this.props;
+
+        if (cart.cartItems.length > 0 && prevState.isLoading) {
+            this.loadingTimeout = window.setTimeout(() => {
+                this.setState({ isLoading: false });
+            }, 2000);
+        }
 
         if (modal.isConfirm && modal.confirmType === "removeCartItem") {
             this.props.setToggleModalConfirm(false);
@@ -40,33 +48,27 @@ export default class Cart extends Component {
             this.props.setCardItemNotDeleted();
 
             this.setState({ justDeleteProduct: true }, () => {
-                window.setTimeout(() => {
+                this.deleteTimeout = window.setTimeout(() => {
                     this.setState({ justDeleteProduct: false });
                 }, 3000);
             });
         }
     }
 
-    renderCartItems() {
-        const {
-            cart,
-            userId,
-            modal,
-            editCartItem,
-            setToggleCartModal,
-        } = this.props;
+    componentWillUnmount() {
+        window.clearTimeout(this.deleteTimeout);
+        window.clearTimeout(this.loadingTimeout);
+    }
 
-        if (cart && cart.userId === userId && cart.cartItems.length > 0) {
-            return cart.cartItems.map(cartItem => <CartItem
-                key={cartItem.id}
-                cartItem={cartItem}
-                modal={modal}
-                editCartItem={editCartItem}
-                setToggleCartModal={setToggleCartModal}
-            />);
-        }
 
-        return <h3>There is no item in your cart</h3>;
+    renderCartItems(cart, modal, editCartItem, setToggleCartModal) {
+        return cart.cartItems.map(cartItem => <CartItem
+            key={cartItem.id}
+            cartItem={cartItem}
+            modal={modal}
+            editCartItem={editCartItem}
+            setToggleCartModal={setToggleCartModal}
+        />);
     }
 
     renderModal() {
@@ -89,18 +91,25 @@ export default class Cart extends Component {
         />
     }
 
-    render() {
-        const { cart } = this.props;
+    renderCartContent() {
+        const { isLoading } = this.state;
 
-        return (
-            /* Cart */
-            <div className="user-cart col-md-9">
-                <div className="mb-4">
-                    <Title className="title">your cart</Title>
-                </div>
-                {this.renderAlertMessage()}
+        const {
+            cart,
+            userId,
+            modal,
+            editCartItem,
+            setToggleCartModal,
+        } = this.props;
+
+        if (cart.cartItems.length <= 0) return <h3>There is no item in your cart</h3>;
+
+        if (isLoading) return <Loading />;
+
+        if (cart && cart.userId === userId && cart.cartItems.length > 0) {
+            return (
                 <div className="cart-list">
-                    {this.renderCartItems()}
+                    {this.renderCartItems(cart, modal, editCartItem, setToggleCartModal)}
 
                     <CartFooter className="cart-footer">
                         <p>
@@ -108,7 +117,19 @@ export default class Cart extends Component {
                         </p>
                     </CartFooter>
                 </div>
+            );
+        }
+    }
 
+    render() {
+        return (
+            /* Cart */
+            <div className="user-cart col-md-9">
+                <div className="mb-4">
+                    <Title className="title">your cart</Title>
+                </div>
+                {this.renderAlertMessage()}
+                {this.renderCartContent()}
                 {this.renderModal()}
             </div>
             /* End cart */

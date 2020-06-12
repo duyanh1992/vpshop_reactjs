@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fromLeftToRight, fromRightToLeft } from '../../../common/utils';
+import { fromLeftToRight } from '../../../common/utils';
 import styled from 'styled-components';
 
 const LogoStyle = styled.div`
@@ -7,7 +7,7 @@ const LogoStyle = styled.div`
 `;
 
 const BannerStyle = styled.div`
-    animation: 1.5s ${fromRightToLeft(550)} ease-out;
+    animation: 1.5s ${fromLeftToRight(550)} ease-out;
 `;
 
 export default class Logo extends Component {

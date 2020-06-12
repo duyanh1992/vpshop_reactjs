@@ -24,7 +24,7 @@ export const fromLeftToRight = x => keyframes`
   100% { transform: translateX(0) }
 `;
 
-export const fromRightToLeft = x => keyframes`
-  0% { transform: translateX(${x}px) }
-  100% { transform: translateX(0) }
+export const fromTopToBottom = x => keyframes`
+  0% { transform: translateY(${x}px) }
+  100% { transform: translateY(0) }
 `;

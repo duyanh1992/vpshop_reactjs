@@ -53,28 +53,33 @@ export default class Menu extends Component {
         };
     }
 
-    setOpenAlert(){
-        this.setState({openAlert: true}, () => {
-            setTimeout(() => {
-                this.setState({openAlert: false})
+    setOpenAlert() {
+        this.setState({ openAlert: true }, () => {
+            this.alertTimeout = window.setTimeout(() => {
+                this.setState({ openAlert: false })
             }, 6000);
         });
     }
+
+    componentWillUnmount() {
+        window.clearTimeout(this.alertTimeout);
+    }
+
 
     renderMessage() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         const { openAlert } = this.state;
 
-        if((!currentUser || currentUser[0].level !== 1) && openAlert) {
+        if ((!currentUser || currentUser[0].level !== 1) && openAlert) {
             const content = 'You do not have a role to acccess admin page !';
 
-            return  <AlertMessage2
-                        content={content}
-                        isOpen={true}
-                        type="danger"
-                    />
+            return <AlertMessage2
+                content={content}
+                isOpen={true}
+                type="danger"
+            />
         }
-        
+
         return '';
     }
 
@@ -98,7 +103,7 @@ export default class Menu extends Component {
                                 </li>
                                 <li className="nav-item" onClick={e => this.setOpenAlert(e)}>
                                     <Link className="nav-link" to={adminLink}>Admin Page</Link>
-                                </li>                   
+                                </li>
                             </ul>
                         </div>
                     </nav>

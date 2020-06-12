@@ -55,19 +55,24 @@ export default class SearchBar extends Component {
 
     componentDidMount() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if(currentUser) this.setState({ isSignedIn: true});
+        if (currentUser) this.setState({ isSignedIn: true });
     }
 
     componentDidUpdate() {
         const { isSignedIn } = this.state;
         const { modal } = this.props;
 
-        if(modal.isConfirm && isSignedIn && modal.confirmType === 'signOut') {
+        if (modal.isConfirm && isSignedIn && modal.confirmType === 'signOut') {
             localStorage.removeItem('currentUser');
-            window.location.reload(); 
+            window.location.reload();
         }
     }
-    
+
+    componentWillUnmount() {
+        window.clearTimeout(this.searchTimeout);
+    }
+
+
     logOut(e) {
         e.preventDefault();
 
@@ -77,17 +82,17 @@ export default class SearchBar extends Component {
     handleChange(e) {
         const { value } = e.target;
 
-        this.setState({searchText: value});
+        this.setState({ searchText: value });
     }
 
     searchProduct(e) {
         const { searchText } = this.state;
-        if(!searchText) {
+        if (!searchText) {
             e.preventDefault();
 
-            this.setState({searchError: true}, () => {
-                window.setTimeout(() => {
-                    this.setState({searchError: false});
+            this.setState({ searchError: true }, () => {
+                this.searchTimeout = window.setTimeout(() => {
+                    this.setState({ searchError: false });
                 }, 3000);
             });
         }
@@ -100,8 +105,8 @@ export default class SearchBar extends Component {
     renderModal() {
         const { modalOpen } = this.state;
 
-        if(modalOpen) {
-            return <ModalSample2 confirmType="signOut" /> ;
+        if (modalOpen) {
+            return <ModalSample2 confirmType="signOut" />;
         }
 
         return null;
@@ -111,10 +116,10 @@ export default class SearchBar extends Component {
         const { searchError } = this.state;
 
         return <AlertMessage2
-                    content={message.form.searchError}
-                    isOpen={searchError}
-                    type="danger"
-                /> 
+            content={message.form.searchError}
+            isOpen={searchError}
+            type="danger"
+        />
     }
 
     render() {
@@ -125,9 +130,9 @@ export default class SearchBar extends Component {
 
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        if(isSignedIn) {
+        if (isSignedIn) {
             userContent = currentUser ? currentUser[0].name : users.currentUser[0].name;
-            userNameStyle = {color: 'red'};
+            userNameStyle = { color: 'red' };
         }
 
         return (
@@ -136,19 +141,19 @@ export default class SearchBar extends Component {
                 <div className="row mb-4 d-flex justify-content-between">
                     <div className="col-md-3">
                         <div className="input-group search-bar">
-                            <Link to={`/product-list/${this.state.searchText}`} style={{textDecoration:'none'}}>
-                                <SearchIcon 
-                                    onClick={(e) => this.searchProduct(e)} 
+                            <Link to={`/product-list/${this.state.searchText}`} style={{ textDecoration: 'none' }}>
+                                <SearchIcon
+                                    onClick={(e) => this.searchProduct(e)}
                                     className="input-group-prepend search-icon"
-                                    style={{height:'100%'}}
+                                    style={{ height: '100%' }}
                                 >
                                     <span className="input-group-text search-btn" id="basic-addon1">
                                         <i className="fas fa-search" />
                                     </span>
                                 </SearchIcon>
                             </Link>
-                            <SearchBox 
-                                type="text" 
+                            <SearchBox
+                                type="text"
                                 className="form-control search-box"
                                 placeholder="Product name"
                                 value={this.state.searchText}
@@ -161,14 +166,19 @@ export default class SearchBar extends Component {
                             Welcome <span style={userNameStyle}>{userContent}</span>
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            { !isSignedIn &&
+                            {!isSignedIn &&
                                 <div>
                                     <Link className="dropdown-item" to="/sign-up">Sign up</Link>
                                     <Link className="dropdown-item" to="/sign-in">Sign in</Link>
                                 </div>
                             }
-                            <Link className="dropdown-item" to="/cart">My cart</Link>
-                            <Link className="dropdown-item" to="" onClick={e => this.logOut(e)}>Sign out</Link>
+
+                            {isSignedIn &&
+                                <div>
+                                    <Link className="dropdown-item" to="/cart">My cart</Link>
+                                    <Link className="dropdown-item" to="" onClick={e => this.logOut(e)}>Sign out</Link>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

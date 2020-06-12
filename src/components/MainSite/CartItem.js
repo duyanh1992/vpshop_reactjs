@@ -2,18 +2,25 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import color from '../../theme/color';
 import { formatCurency } from './../../constants/functions';
+import { fromTopToBottom, fadeIn } from '../../common/utils';
 
 const CartItemStyle = styled.div`
     border: 1px dotted ${color.gray};
+    overflow: hidden;
+    animation: 1.5s ${fadeIn} forwards;
 
-    .prd-img {
-        img {
-            width: 100%;
+    .cart-item-img {
+        animation: 1.2s ${fromTopToBottom(-200)} ease-in;
+        .prd-img {
+            img {
+                width: 100%;
+            }
         }
     }
 
     .cart-item-info {
         list-style: none;
+        animation: 1.2s ${fromTopToBottom(200)} ease-in;
 
         li {
             padding: 10px 0;
@@ -57,7 +64,7 @@ export default class CartItem extends Component {
     componentDidMount() {
         const { cartItem } = this.props;
 
-        this.setState({quantity: cartItem.quantity});
+        this.setState({ quantity: cartItem.quantity });
     }
 
     componentDidUpdate(prevProps) {
@@ -72,12 +79,12 @@ export default class CartItem extends Component {
         const { value } = e.target;
         const { cartItem } = this.props;
 
-        if(!value) {
+        if (!value) {
             this.setEditState('', 0.5, 'none');
         }
 
-        else { 
-            if(cartItem.quantity !== parseInt(value)) {
+        else {
+            if (cartItem.quantity !== parseInt(value)) {
                 this.setEditState(parseInt(value), 1, 'auto');
             }
 
@@ -95,7 +102,7 @@ export default class CartItem extends Component {
         const { cartItem } = this.props;
         const { quantity } = this.state;
 
-        if(!quantity) this.setEditState(1, 1, 'auto');
+        if (!quantity) this.setEditState(1, 1, 'auto');
 
         const itemTotal = formatCurency((parseInt(cartItem.product_price.replace(/\./g, '')) * quantity).toString());
 
@@ -116,16 +123,16 @@ export default class CartItem extends Component {
 
     render() {
         const { cartItem } = this.props;
-        const { opacity , pointerEvents } = this.state;
+        const { opacity, pointerEvents } = this.state;
 
         return (
             <CartItemStyle opacity={opacity} pointerEvents={pointerEvents} className="cart-item mb-4">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-md-3 cart-item-img">
                             <figure className="prd-img">
-                                <img style={{'height': '260px'}} src={cartItem.image_url} alt="" />
-                            </figure>	
+                                <img style={{ 'height': '260px' }} src={cartItem.image_url} alt="" />
+                            </figure>
                         </div>
                         <ul className="col-md-9 cart-item-info pl-5">
                             <li>
@@ -138,9 +145,9 @@ export default class CartItem extends Component {
                             </li>
                             <li>
                                 <label>Quantity:</label>
-                                <input 
-                                    className="item-amount" 
-                                    type="number" 
+                                <input
+                                    className="item-amount"
+                                    type="number"
                                     value={this.state.quantity}
                                     onChange={e => this.onChangeQuantity(e)}
                                     min="0"
@@ -151,14 +158,14 @@ export default class CartItem extends Component {
                                 <span className="item-total">{cartItem.total} VNĐ</span>
                             </li>
 
-                            <button 
-                                type="button" 
+                            <button
+                                type="button"
                                 className="btn btn-danger float-right"
                                 onClick={() => this.onRemoveCartItem()}
                             >Remove
                             </button>
-                            
-                            <button 
+
+                            <button
                                 type="button"
                                 className="btn btn-info edit-btn float-right mr-2"
                                 onClick={() => this.onEditCartItem()}
@@ -166,7 +173,7 @@ export default class CartItem extends Component {
                             </button>
                         </ul>
                     </div>
-                </div>						
+                </div>
             </CartItemStyle>
         )
     }

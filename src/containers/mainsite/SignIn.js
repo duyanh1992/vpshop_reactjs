@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as userActions from './../../actions/user';
 import * as modalActions from '../../actions/modal';
 
-class SignUpContainer extends Component {
+class SignInContainer extends Component {
     render() {
         const { userFunctions, modalFunctions, modal, users } = this.props;
 
@@ -37,4 +37,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(SignInContainer);
