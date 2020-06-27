@@ -66,7 +66,7 @@ export default class ProductList extends Component {
             <div className="col-md-9">
                 <ProductStyle className="products">
                     <div className="product-list">
-                        <Title className="title">{categoryName.toUpperCase()}</Title>
+                        <Title>{categoryName.toUpperCase()}</Title>
                         <div className="prd-list text-center mt-3 mb-3">
                             <div className="row">
                                 {this.renderProduct()}

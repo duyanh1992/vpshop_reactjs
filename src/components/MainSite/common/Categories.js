@@ -4,17 +4,9 @@ import color from '../../../theme/color';
 import { Link } from "react-router-dom";
 import Loading from './Loading';
 import { fadeIn } from '../../../common/utils';
+import Title from '../../../theme/styles/Title';
 
 const Category = styled.div`
-    .title {
-        font-size: 16px;
-        padding: 12px;
-        background: ${color.black};
-        color: ${color.white};
-        text-transform: capitalize;
-        font-weight: bold;
-    }
-
     .category-list {
         border: 1px solid ${color.gray};
         list-style: none;
@@ -31,6 +23,10 @@ const Category = styled.div`
                 text-transform: capitalize;
             }
         }
+    }
+
+    @media (max-width: 576px) {
+        display: none;
     }
 `;
 
@@ -89,7 +85,7 @@ export default class Categories extends Component {
             /* Category */
             <div className="col-md-3">
                 <Category className="categories">
-                    <h3 className="title">phone categories</h3>
+                    <Title>phone categories</Title>
                     {this.renderSideBar()}
                 </Category>
 

@@ -9,7 +9,7 @@ export default class Products extends Component {
 
         return (
             /* Products */
-            <div className="col-md-9">
+            <div className="col-md-9 col-12">
                 <ProductStyle className="products">
                     <NewProducts
                         getNewProducts={mainProductFunctions.getNewProducts}

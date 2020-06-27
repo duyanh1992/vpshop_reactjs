@@ -101,7 +101,7 @@ export default class SpecialProducts extends Component {
     render() {
         return (
             <div className="special-products">
-                <Title className="title">special products</Title>
+                <Title>special products</Title>
                 {this.renderContent()}
             </div>
         )

@@ -10,11 +10,28 @@ const PrdItem = styled.div`
 
     a {
         text-decoration: none;
-    }    
 
-    .prd-name {
-        color: ${color.black}
+        .prd-name {
+            color: ${color.black};
+            height: 40px;
+        }
+    
+        .prd-img {
+            height: 150px;
+        }
     }
+
+    @media (max-width: 576px) {
+        a {
+            .prd-img {
+                height: 300px;
+            }
+            .prd-name {
+                color: ${color.black}
+                margin: 0;
+            }
+        }
+    } 
 `;
 
 export default class ProductItem extends Component {
@@ -28,9 +45,9 @@ export default class ProductItem extends Component {
                         <div className="prd pt-3">
                             <div className="container">
                                 <figure>
-                                    <img alt="prd-img" style={{ height: '150px' }} className="prd-img" src={product.image_url} />
+                                    <img alt="prd-img"className="prd-img" src={product.image_url} />
                                 </figure>
-                                <p className="prd-name" style={{ height: '40px' }}>{product.name}</p>
+                                <p className="prd-name">{product.name}</p>
                                 <p className="prd-price">Giá: {product.price} VNĐ</p>
                             </div>
                         </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Title from '../../theme/styles/Title';
 import ProductItem from './common/ProductItem';
 import Loading from './common/Loading';
+import { ProductListStyle } from '../../common/utils';
 
 export default class NewProducts extends Component {
     constructor(props) {
@@ -92,9 +93,9 @@ export default class NewProducts extends Component {
 
         return (
             <div className="prd-list text-center mt-3 mb-5">
-                <div className="row">
+                <ProductListStyle className="row">
                     {this.renderNewProducts()}
-                </div>
+                </ProductListStyle>
 
                 {this.renderLoadMoreButton()}
             </div>
@@ -103,8 +104,8 @@ export default class NewProducts extends Component {
 
     render() {
         return (
-            <div className="new-products">
-                <Title className="title">new products</Title>
+            <div className="new-products mt-4 mb-4 mt-md-0">
+                <Title>new products</Title>
                 {this.renderContent()}
             </div>
         )

@@ -7,7 +7,7 @@ import Menu from './Menu';
 export default class Header extends Component {
     render() {
         return (
-            <div className="header mb-4">
+            <div className="header mb-md-4">
                 <SearchBar />
 
                 <div className="container">
