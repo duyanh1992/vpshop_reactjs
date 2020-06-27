@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const showPageContent = routes => {
   let result = null;
@@ -27,4 +27,13 @@ export const fromLeftToRight = x => keyframes`
 export const fromTopToBottom = x => keyframes`
   0% { transform: translateY(${x}px) }
   100% { transform: translateY(0) }
+`;
+
+export const ProductListStyle = styled.div`
+    height: 300px;
+    overflow: auto;
+
+    @media (max-width: 576px) {
+      height: 450px;
+    }
 `;

@@ -16,10 +16,10 @@ export default class Logo extends Component {
             /* Logo and banner */
             <div className="logo mb-4">
                 <div className="row">
-                    <LogoStyle className="col-md-5">
+                    <LogoStyle className="col-md-5 col-12 mb-md-3 mb-4 text-center text-md-left">
                         <img alt="logo" src={process.env.PUBLIC_URL + '/images/logo.png'} />
                     </LogoStyle>
-                    <BannerStyle className="col-md-7 d-flex align-items-center">
+                    <BannerStyle className="col-12 col-md-7 d-md-flex align-items-center text-center">
                         <img alt="banner" src={process.env.PUBLIC_URL + '/images/banner.png'} />
                     </BannerStyle>
                 </div>

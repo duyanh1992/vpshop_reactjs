@@ -47,6 +47,16 @@ const CartItemStyle = styled.div`
             pointer-events: ${props => props.pointerEvents};;
         }
     }
+
+    @media (max-width: 576px) {
+        .cart-item-img {
+            .prd-img {
+                img {
+                    width: 50%;
+                }
+            }
+        }
+    }
 `;
 
 
@@ -129,9 +139,9 @@ export default class CartItem extends Component {
             <CartItemStyle opacity={opacity} pointerEvents={pointerEvents} className="cart-item mb-4">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-3 cart-item-img">
+                        <div className="col-md-3 col-12 text-center cart-item-img">
                             <figure className="prd-img">
-                                <img style={{ 'height': '260px' }} src={cartItem.image_url} alt="" />
+                                <img src={cartItem.image_url} alt="" />
                             </figure>
                         </div>
                         <ul className="col-md-9 cart-item-info pl-5">

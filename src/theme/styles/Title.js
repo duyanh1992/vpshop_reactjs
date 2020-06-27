@@ -2,8 +2,8 @@ import color from "../color";
 import styled from 'styled-components';
 
 const Title = styled.h3`
-    font-size: 16px;
-    padding: 12px;
+    font-size: 17px;
+    padding: 14px;
     background: ${color.black};
     color: ${color.white};
     text-transform: capitalize;

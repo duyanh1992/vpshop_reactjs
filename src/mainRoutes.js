@@ -1,10 +1,10 @@
 import React from 'react';
-import Products from './containers/Mainsite/Products';
-import ProductList from './containers/Mainsite/ProductList';
-import SignUp from './containers/Mainsite/SignUp';
-import SignIn from './containers/Mainsite/SignIn';
-import DetailProduct from './containers/Mainsite/DetailProduct';
-import Cart from './containers/Mainsite/Cart';
+import Products from './containers/mainsite/Products';
+import ProductList from './containers/mainsite/ProductList';
+import SignUp from './containers/mainsite/SignUp';
+import SignIn from './containers/mainsite/SignIn';
+import DetailProduct from './containers/mainsite/DetailProduct';
+import Cart from './containers/mainsite/Cart';
 
 const mainRoutes = [
     {

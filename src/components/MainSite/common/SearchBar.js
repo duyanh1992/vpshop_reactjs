@@ -25,6 +25,12 @@ const SearchBox = styled.input`
     border: 1px solid #CDCDCD;
 `;
 
+const Dropdown = styled.div`
+    text-align: right;
+    display: flex;
+    justify-content: center;
+`;
+
 export default class SearchBar extends Component {
     constructor(props) {
         super(props);
@@ -138,8 +144,8 @@ export default class SearchBar extends Component {
         return (
             /* Search bar */
             <div>
-                <div className="row mb-4 d-flex justify-content-between">
-                    <div className="col-md-3">
+                <div className="row mb-md-4 mb-2 mb-md-3 d-flex justify-content-between">
+                    <div className="col-md-3 col-12">
                         <div className="input-group search-bar">
                             <Link to={`/product-list/${this.state.searchText}`} style={{ textDecoration: 'none' }}>
                                 <SearchIcon
@@ -161,7 +167,7 @@ export default class SearchBar extends Component {
                             />
                         </div>
                     </div>
-                    <div className="dropdown mr-3">
+                    <Dropdown className="dropdown mr-md-2 col-md-2 col-12">
                         <a className="nav-link dropdown-toggle text-secondary font-weight-bold" href="#a" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Welcome <span style={userNameStyle}>{userContent}</span>
                         </a>
@@ -180,7 +186,7 @@ export default class SearchBar extends Component {
                                 </div>
                             }
                         </div>
-                    </div>
+                    </Dropdown>
                 </div>
                 {this.renderAlertMessage()}
 
